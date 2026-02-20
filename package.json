@@ -1,0 +1,17 @@
+{
+  "name": "petco-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.29.3",
+  "description": "Petco Clone Monorepo",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "install:all": "pnpm install"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  }
+}
