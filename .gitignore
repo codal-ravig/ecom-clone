@@ -4,3 +4,10 @@ build/
 .env
 *.log
 .turbo/
+.DS_Store
+*.tsbuildinfo
+*.local
+*.pem
+/coverage
+/.pnp
+.pnp.js

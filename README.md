@@ -6,7 +6,7 @@ This is a Sanity Studio project for the Petco clone, designed to manage products
 
 This project uses a monorepo structure managed by **Turbo** and **pnpm**.
 
-- `apps/studio`: The Sanity Studio application.
+- `studio`: The Sanity Studio application.
 - `packages/`: (Optional) Reusable components or configurations.
 
 ## Schema Architecture
@@ -44,14 +44,16 @@ pnpm install
 ### Development
 To start the Sanity Studio locally:
 ```bash
-pnpm --filter studio dev
+pnpm --filter petco-clone dev
 ```
+(Note: The filter name `petco-clone` matches the package name in `studio/package.json`).
+
 The studio will be available at `http://localhost:3333`.
 
 ## Commands
 - `pnpm build`: Build the project.
-- `pnpm --filter studio deploy`: Deploy the Sanity Studio to the cloud.
-- `pnpm --filter studio typecheck`: Run TypeScript validation.
+- `pnpm --filter petco-clone deploy`: Deploy the Sanity Studio to the cloud.
+- `pnpm --filter petco-clone typecheck`: Run TypeScript validation.
 
 ## Tech Stack
 - **Sanity v3**
