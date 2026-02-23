@@ -2,6 +2,7 @@ import {productType} from './productType'
 import {categoryType, subCategoryType, childCategoryType} from './categoryType'
 import {brandType} from './brandType'
 import {collectionType} from './collectionType'
+import { variantType } from './variantType'
 
 export const schemaTypes = [
   productType,
@@ -10,4 +11,5 @@ export const schemaTypes = [
   childCategoryType,
   brandType,
   collectionType,
+  variantType,
 ]

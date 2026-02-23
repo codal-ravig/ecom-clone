@@ -4,6 +4,22 @@ export const productType = defineType({
   name: 'product',
   title: 'Product',
   type: 'document',
+  preview: {
+  select: {
+    title: 'name',
+    price: 'price',
+    stock: 'stock',
+    media: 'images.0.asset',
+  },
+  prepare(selection) {
+    const { title, price, stock, media } = selection
+    return {
+      title,
+      subtitle: `₹${price ?? 0} • Stock: ${stock ?? 0}`,
+      media,
+    }
+  },
+},
   fields: [
     defineField({
       name: 'name',
@@ -73,8 +89,6 @@ export const productType = defineType({
       title: 'Review',
       type: 'object' as const,
       fields: [
-        defineField({name: 'totalCount', title: 'Total Count', type: 'number' as const}),
-        defineField({name: 'avgStar', title: 'Average Star', type: 'number' as const}),
         defineField({
           name: 'userReviews',
           title: 'User Reviews',
@@ -83,9 +97,27 @@ export const productType = defineType({
             defineArrayMember({
               type: 'object' as const,
               fields: [
-                defineField({name: 'review', title: 'Review (Star Rating)', type: 'number' as const}),
+                defineField({
+                  name: 'review',
+                  title: 'Review (Star Rating)',
+                  type: 'number' as const,
+                }),
                 defineField({name: 'title', title: 'Title', type: 'string' as const}),
                 defineField({name: 'description', title: 'Description', type: 'text' as const}),
+                defineField({
+                  name: 'images',
+                  title: 'Images',
+                  type: 'array' as const,
+                  of: [
+                    defineArrayMember({
+                      type: 'image' as const,
+                      options: {hotspot: true},
+                      fields: [
+                        defineField({name: 'alt', title: 'Alt Text', type: 'string' as const}),
+                      ],
+                    }),
+                  ],
+                }),
                 defineField({name: 'time', title: 'Time', type: 'datetime' as const}),
                 defineField({name: 'userDetails', title: 'User Details', type: 'string' as const}),
               ],
@@ -125,12 +157,12 @@ export const productType = defineType({
     defineField({
       name: 'variant',
       title: 'Variant',
-      type: 'string' as const,
-    }),
-    defineField({
-      name: 'variantDetails',
-      title: 'Variant Details',
-      type: 'text' as const,
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'variant' as const,
+        }),
+      ],
     }),
     defineField({
       name: 'specifications',
@@ -142,7 +174,7 @@ export const productType = defineType({
           name: 'brand',
           title: 'Brand',
           type: 'reference' as const,
-          to: [{ type: 'brand' as const }],
+          to: [{type: 'brand' as const}],
         }),
         defineField({name: 'daysToShip', title: 'Days to Ship', type: 'number' as const}),
       ],
