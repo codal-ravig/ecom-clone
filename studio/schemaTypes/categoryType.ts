@@ -1,9 +1,20 @@
-import { defineField, defineType, type ReferenceDefinition } from 'sanity'
+import { defineField, defineType } from "sanity";
 
 export const categoryType = defineType({
   name: 'category',
   title: 'Category',
   type: 'document',
+  preview: {
+    select: {
+      title: 'name',
+      parentName: 'parent.name',
+    },
+    prepare({ title, parentName }) {
+      return {
+        title: parentName ? `${parentName} > ${title}` : title,
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'name',
@@ -24,73 +35,13 @@ export const categoryType = defineType({
       type: 'image',
       options: { hotspot: true },
     }),
-  ],
-})
 
-export const subCategoryType = defineType({
-  name: 'subCategory',
-  title: 'Sub Category',
-  type: 'document',
-  fields: [
     defineField({
-      name: 'name',
-      title: 'Name',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'name' },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      options: { hotspot: true },
-    }),
-    defineField({
-      name: 'parentCategory',
+      name: 'parent',
       title: 'Parent Category',
       type: 'reference',
       to: [{ type: 'category' }],
-      validation: (Rule) => Rule.required(),
-    } as ReferenceDefinition),
-  ],
-})
-
-export const childCategoryType = defineType({
-  name: 'childCategory',
-  title: 'Child Category',
-  type: 'document',
-  fields: [
-    defineField({
-      name: 'name',
-      title: 'Name',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
+      description: 'Leave empty if top level category',
     }),
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'name' },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      options: { hotspot: true },
-    }),
-    defineField({
-      name: 'parentSubCategory',
-      title: 'Parent Sub Category',
-      type: 'reference',
-      to: [{ type: 'subCategory' }],
-      validation: (Rule) => Rule.required(),
-    } as ReferenceDefinition),
   ],
 })

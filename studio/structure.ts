@@ -22,14 +22,6 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title('Categories')
                 .child(S.documentTypeList('category').title('Main Categories')),
-              // Sub Categories
-              S.listItem()
-                .title('Sub Categories')
-                .child(S.documentTypeList('subCategory').title('Sub Categories')),
-              // Child Categories
-              S.listItem()
-                .title('Child Categories')
-                .child(S.documentTypeList('childCategory').title('Child Categories')),
             ]),
         ),
 

@@ -39,50 +39,45 @@ export const productType = defineType({
     }),
     defineField({
       name: 'category',
-      title: 'Category',
-      type: 'reference' as const,
-      to: [{type: 'category' as const}],
-      validation: (Rule) => Rule.required(),
+      title: 'Main Category',
+      type: 'reference',
+      to: [{ type: 'category' }],
+      options: {
+        filter: '!defined(parent)',
+      },
+      validation: (Rule: any) => Rule.required(),
     }),
     defineField({
       name: 'subCategory',
       title: 'Sub Category',
-      type: 'reference' as const,
-      to: [{type: 'subCategory' as const}],
+      type: 'reference',
+      to: [{ type: 'category' }],
       options: {
-        filter: ({document}: {document: any}) => {
-          if (!document.category) {
-            return {
-              filter: '!defined(parentCategory)',
-            }
-          }
+        filter: ({ document }: any) => {
+          if (!document.category) return { filter: 'false' }
           return {
-            filter: 'parentCategory._ref == $categoryId',
-            params: {categoryId: document.category._ref},
+            filter: 'parent._ref == $parentId',
+            params: { parentId: (document.category as any)._ref },
           }
         },
       },
-      validation: (Rule) => Rule.required(),
+      hidden: ({ document }: any) => !document.category,
     }),
     defineField({
       name: 'childCategory',
       title: 'Child Category',
-      type: 'reference' as const,
-      to: [{type: 'childCategory' as const}],
+      type: 'reference',
+      to: [{ type: 'category' }],
       options: {
-        filter: ({document}: {document: any}) => {
-          if (!document.subCategory) {
-            return {
-              filter: '!defined(parentSubCategory)',
-            }
-          }
+        filter: ({ document }: any) => {
+          if (!document.subCategory) return { filter: 'false' }
           return {
-            filter: 'parentSubCategory._ref == $subCategoryId',
-            params: {subCategoryId: document.subCategory._ref},
+            filter: 'parent._ref == $parentId',
+            params: { parentId: (document.subCategory as any)._ref },
           }
         },
       },
-      validation: (Rule) => Rule.required(),
+      hidden: ({ document }: any) => !document.subCategory,
     }),
     defineField({
       name: 'review',
