@@ -1,5 +1,7 @@
+import { MdOutlineProductionQuantityLimits, MdOutlineCollectionsBookmark } from 'react-icons/md'
 import type {StructureBuilder} from 'sanity/structure'
-
+import { TbBrandBadoo } from "react-icons/tb";
+import { BiCategory } from "react-icons/bi";
 export const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
@@ -7,6 +9,7 @@ export const structure = (S: StructureBuilder) =>
       // Products Section
       S.listItem()
         .title('Products')
+        .icon(MdOutlineProductionQuantityLimits)
         .child(S.documentTypeList('product').title('All Products')),
 
       S.divider(),
@@ -14,6 +17,7 @@ export const structure = (S: StructureBuilder) =>
       // Taxonomy Section
       S.listItem()
         .title('Taxonomy')
+        .icon(BiCategory)
         .child(
           S.list()
             .title('Taxonomy')
@@ -30,6 +34,7 @@ export const structure = (S: StructureBuilder) =>
       // Brands Section
       S.listItem()
         .title('Brands')
+        .icon(TbBrandBadoo)
         .child(S.documentTypeList('brand').title('All Brands')),
 
       S.divider(),
@@ -37,6 +42,7 @@ export const structure = (S: StructureBuilder) =>
       // Collections Section
       S.listItem()
         .title('Collections')
+        .icon(MdOutlineCollectionsBookmark)
         .child(S.documentTypeList('collection').title('All Collections')),
 
       // Filter out types that are manually listed above to avoid duplicates at the root
