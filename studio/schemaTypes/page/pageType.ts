@@ -31,6 +31,8 @@ export const pageType = defineType({
         defineArrayMember({type: 'faqSection'}),
         defineArrayMember({type: 'featuredArticlesSection'}),
         defineArrayMember({type: 'featuredProductsSection'}),
+        defineArrayMember({type: 'contactHeroSection'}),
+        defineArrayMember({type: 'gridSection'}),
       ],
     }),
   ],

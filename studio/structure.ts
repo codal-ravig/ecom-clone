@@ -2,12 +2,31 @@ import {MdOutlineProductionQuantityLimits, MdOutlineCollectionsBookmark} from 'r
 import type {StructureBuilder} from 'sanity/structure'
 import {TbBrandBadoo} from 'react-icons/tb'
 import {BiCategory} from 'react-icons/bi'
-import {FaFileAlt, FaTags, FaUser, FaNewspaper, FaDesktop} from 'react-icons/fa'
+import {FaFileAlt, FaTags, FaUser, FaNewspaper, FaDesktop, FaCogs} from 'react-icons/fa'
 
 export const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
     .items([
+      // Settings Section
+      S.listItem()
+        .title('Settings')
+        .icon(FaCogs)
+        .child(
+          S.list()
+            .title('Settings')
+            .items([
+              S.listItem()
+                .title('Header')
+                .child(S.document().schemaType('header').documentId('header')),
+              S.listItem()
+                .title('Footer')
+                .child(S.document().schemaType('footer').documentId('footer')),
+            ]),
+        ),
+
+      S.divider(),
+
       // Pages Section
       S.listItem()
         .title('Pages')
@@ -83,6 +102,8 @@ export const structure = (S: StructureBuilder) =>
             'articleCategory',
             'user',
             'page',
+            'header',
+            'footer',
           ].includes(listItem.getId() || ''),
       ),
     ])

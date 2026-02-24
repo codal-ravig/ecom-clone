@@ -15,6 +15,10 @@ import { infoSection } from './page/sections/infoSection'
 import { faqSection } from './page/sections/faqSection'
 import { featuredArticlesSection } from './page/sections/featuredArticlesSection'
 import { featuredProductsSection } from './page/sections/featuredProductsSection'
+import { contactHeroSection } from './page/sections/contactHeroSection'
+import { gridSection } from './page/sections/gridSection'
+import { headerType } from './settings/headerType'
+import { footerType } from './settings/footerType'
 
 export const schemaTypes = [
   productType,
@@ -33,4 +37,8 @@ export const schemaTypes = [
   faqSection,
   featuredArticlesSection,
   featuredProductsSection,
+  contactHeroSection,
+  gridSection,
+  headerType,
+  footerType,
 ]
