@@ -1,4 +1,6 @@
-const productWithVariantValues = `*[_type == 'product']{
+import { groq } from 'sanity'
+
+export const productWithVariantValues = groq`*[_type == 'product']{
   name,
     price,
   "totalCount": count(review.userReviews),
@@ -20,7 +22,7 @@ const productWithVariantValues = `*[_type == 'product']{
   },
 }`
 
-const productVariantData = `*[_type == 'product']{
+export const productVariantData = groq`*[_type == 'product']{
   name,
     price,
   "totalCount": count(review.userReviews),

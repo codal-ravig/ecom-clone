@@ -13,6 +13,23 @@
  */
 
 // Source: schema.json
+export type ProductQNA = {
+  _type: 'productQNA'
+  nickname?: string
+  question?: string
+  email?: string
+  location?: string
+  answers?: Array<{
+    nickname?: string
+    answer?: string
+    email?: string
+    location?: string
+    helpful?: number
+    notHelpful?: number
+    _key: string
+  }>
+}
+
 export type Variant = {
   _type: 'variant'
   name?: string
@@ -107,25 +124,28 @@ export type Product = {
   category?: CategoryReference
   subCategory?: CategoryReference
   childCategory?: CategoryReference
-  review?: {
-    userReviews?: Array<{
-      review?: number
-      title?: string
-      description?: string
-      images?: Array<{
-        asset?: SanityImageAssetReference
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: string
-        _type: 'image'
-        _key: string
-      }>
-      time?: string
-      userDetails?: string
+  review?: Array<{
+    review?: number
+    title?: string
+    description?: string
+    images?: Array<{
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
       _key: string
     }>
-  }
+    time?: string
+    userDetails?: string
+    _key: string
+  }>
+  productQNA?: Array<
+    {
+      _key: string
+    } & ProductQNA
+  >
   stock?: number
   images?: Array<{
     asset?: SanityImageAssetReference
@@ -328,6 +348,7 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | ProductQNA
   | Variant
   | SanityImageAssetReference
   | ProductReference
@@ -357,8 +378,8 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 export type ProductWithVariantValuesResult = Array<{
   name: string | null
   price: number | null
-  totalCount: number | null
-  avgStar: number | 0 | null
+  totalCount: null
+  avgStar: 0
   variants: Array<null> | null
 }>
 
@@ -368,8 +389,8 @@ export type ProductWithVariantValuesResult = Array<{
 export type ProductVariantDataResult = Array<{
   name: string | null
   price: number | null
-  totalCount: number | null
-  avgStar: number | 0 | null
+  totalCount: null
+  avgStar: 0
   variants: Array<null> | null
 }>
 
