@@ -1,7 +1,9 @@
-import { MdOutlineProductionQuantityLimits, MdOutlineCollectionsBookmark } from 'react-icons/md'
+import {MdOutlineProductionQuantityLimits, MdOutlineCollectionsBookmark} from 'react-icons/md'
 import type {StructureBuilder} from 'sanity/structure'
-import { TbBrandBadoo } from "react-icons/tb";
-import { BiCategory } from "react-icons/bi";
+import {TbBrandBadoo} from 'react-icons/tb'
+import {BiCategory} from 'react-icons/bi'
+import {FaFileAlt, FaTags, FaUser, FaNewspaper} from 'react-icons/fa'
+
 export const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
@@ -11,6 +13,31 @@ export const structure = (S: StructureBuilder) =>
         .title('Products')
         .icon(MdOutlineProductionQuantityLimits)
         .child(S.documentTypeList('product').title('All Products')),
+
+      S.divider(),
+
+      // Article Management Section
+      S.listItem()
+        .title('Article Management')
+        .icon(FaNewspaper)
+        .child(
+          S.list()
+            .title('Article Management')
+            .items([
+              S.listItem()
+                .title('Articles')
+                .icon(FaFileAlt)
+                .child(S.documentTypeList('article').title('All Articles')),
+              S.listItem()
+                .title('Article Categories')
+                .icon(FaTags)
+                .child(S.documentTypeList('articleCategory').title('All Categories')),
+              S.listItem()
+                .title('Users')
+                .icon(FaUser)
+                .child(S.documentTypeList('user').title('All Users')),
+            ]),
+        ),
 
       S.divider(),
 
@@ -48,8 +75,16 @@ export const structure = (S: StructureBuilder) =>
       // Filter out types that are manually listed above to avoid duplicates at the root
       ...S.documentTypeListItems().filter(
         (listItem) =>
-          !['product', 'category', 'subCategory', 'childCategory', 'brand', 'collection'].includes(
-            listItem.getId() || '',
-          ),
+          ![
+            'product',
+            'category',
+            'subCategory',
+            'childCategory',
+            'brand',
+            'collection',
+            'article',
+            'articleCategory',
+            'user',
+          ].includes(listItem.getId() || ''),
       ),
     ])
