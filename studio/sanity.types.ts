@@ -13,11 +13,158 @@
  */
 
 // Source: schema.json
+export type ProductReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'product'
+}
+
+export type FeaturedProductsSection = {
+  _type: 'featuredProductsSection'
+  heading?: string
+  products?: Array<
+    {
+      _key: string
+    } & ProductReference
+  >
+}
+
+export type ArticleReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'article'
+}
+
+export type FeaturedArticlesSection = {
+  _type: 'featuredArticlesSection'
+  heading?: string
+  articles?: Array<
+    {
+      _key: string
+    } & ArticleReference
+  >
+}
+
+export type FaqSection = {
+  _type: 'faqSection'
+  heading?: string
+  faqs?: Array<{
+    question?: string
+    answer?: string
+    _key: string
+  }>
+}
+
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'
   _weak?: boolean
   [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+}
+
+export type InfoSection = {
+  _type: 'infoSection'
+  heading?: string
+  text?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  imageSide?: 'left' | 'right'
+}
+
+export type TextSection = {
+  _type: 'textSection'
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+}
+
+export type HeroSection = {
+  _type: 'heroSection'
+  heading?: string
+  subheading?: string
+  backgroundImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  ctaText?: string
+  ctaLink?: string
+}
+
+export type Page = {
+  _id: string
+  _type: 'page'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  pageBuilder?: Array<
+    | ({
+        _key: string
+      } & HeroSection)
+    | ({
+        _key: string
+      } & TextSection)
+    | ({
+        _key: string
+      } & InfoSection)
+    | ({
+        _key: string
+      } & FaqSection)
+    | ({
+        _key: string
+      } & FeaturedArticlesSection)
+    | ({
+        _key: string
+      } & FeaturedProductsSection)
+  >
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x?: number
+  y?: number
+  height?: number
+  width?: number
+}
+
+export type Slug = {
+  _type: 'slug'
+  current?: string
+  source?: string
 }
 
 export type ArticleCategoryReference = {
@@ -32,13 +179,6 @@ export type UserReference = {
   _type: 'reference'
   _weak?: boolean
   [internalGroqTypeReferenceTo]?: 'user'
-}
-
-export type ProductReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'product'
 }
 
 export type Article = {
@@ -99,28 +239,6 @@ export type Article = {
         _key: string
       }
   >
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x?: number
-  y?: number
-  height?: number
-  width?: number
-}
-
-export type Slug = {
-  _type: 'slug'
-  current?: string
-  source?: string
 }
 
 export type ArticleCategory = {
@@ -481,14 +599,22 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
-  | SanityImageAssetReference
-  | ArticleCategoryReference
-  | UserReference
   | ProductReference
-  | Article
+  | FeaturedProductsSection
+  | ArticleReference
+  | FeaturedArticlesSection
+  | FaqSection
+  | SanityImageAssetReference
+  | InfoSection
+  | TextSection
+  | HeroSection
+  | Page
   | SanityImageCrop
   | SanityImageHotspot
   | Slug
+  | ArticleCategoryReference
+  | UserReference
+  | Article
   | ArticleCategory
   | User
   | ProductQNA

@@ -2,21 +2,26 @@ import {MdOutlineProductionQuantityLimits, MdOutlineCollectionsBookmark} from 'r
 import type {StructureBuilder} from 'sanity/structure'
 import {TbBrandBadoo} from 'react-icons/tb'
 import {BiCategory} from 'react-icons/bi'
-import {FaFileAlt, FaTags, FaUser, FaNewspaper} from 'react-icons/fa'
+import {FaFileAlt, FaTags, FaUser, FaNewspaper, FaDesktop} from 'react-icons/fa'
 
 export const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
     .items([
-      // Products Section
+      // Pages Section
+      S.listItem()
+        .title('Pages')
+        .icon(FaDesktop)
+        .child(S.documentTypeList('page').title('All Pages')),
+
+      S.divider(),
+
       S.listItem()
         .title('Products')
         .icon(MdOutlineProductionQuantityLimits)
         .child(S.documentTypeList('product').title('All Products')),
 
       S.divider(),
-
-      // Article Management Section
       S.listItem()
         .title('Article Management')
         .icon(FaNewspaper)
@@ -40,8 +45,6 @@ export const structure = (S: StructureBuilder) =>
         ),
 
       S.divider(),
-
-      // Taxonomy Section
       S.listItem()
         .title('Taxonomy')
         .icon(BiCategory)
@@ -49,24 +52,18 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title('Taxonomy')
             .items([
-              // Categories
               S.listItem()
                 .title('Categories')
                 .child(S.documentTypeList('category').title('Main Categories')),
-            ]),
-        ),
-
-      S.divider(),
-
-      // Brands Section
-      S.listItem()
+                S.listItem()
         .title('Brands')
         .icon(TbBrandBadoo)
         .child(S.documentTypeList('brand').title('All Brands')),
 
-      S.divider(),
+            ]),
+        ),
 
-      // Collections Section
+      S.divider(),
       S.listItem()
         .title('Collections')
         .icon(MdOutlineCollectionsBookmark)
@@ -85,6 +82,7 @@ export const structure = (S: StructureBuilder) =>
             'article',
             'articleCategory',
             'user',
+            'page',
           ].includes(listItem.getId() || ''),
       ),
     ])
