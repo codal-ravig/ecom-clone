@@ -14,7 +14,7 @@ const DRY_RUN = false
 const client = createClient({
   projectId: 'i9lae4hh',
   dataset: 'production',
-  useCdn: false,
+  useCdn: true,
   apiVersion: '2024-02-24',
   token: process.env.SANITY_API_WRITE_TOKEN,
 })
@@ -85,11 +85,11 @@ async function importUsers() {
         biography: [
           {
             _type: 'block',
-            _key: randomKey(), // REQUIRED for Sanity blocks
+            _key: randomKey(),
             children: [
               {
                 _type: 'span',
-                _key: randomKey(), // REQUIRED for block children
+                _key: randomKey(),
                 text: `${user.firstName} ${user.lastName} is a ${user.age} year old ${user.gender} from ${user.address?.city}. They currently work at ${user.company?.name} as a ${user.company?.title}.`,
               },
             ],
