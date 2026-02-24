@@ -21,6 +21,12 @@ export const articleType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'headerImage',
+      title: 'Header Image',
+      type: 'image',
+      options: {hotspot: true},
+    }),
+    defineField({
       name: 'categories',
       title: 'Categories',
       type: 'array',
@@ -48,6 +54,17 @@ export const articleType = defineType({
       title: 'Reviewed By',
       type: 'reference',
       to: [{type: 'user'}],
+    }),
+    defineField({
+      name: 'relatedProducts',
+      title: 'Related Products',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{type: 'product'}],
+        }),
+      ],
     }),
     defineField({
       name: 'publishedAt',

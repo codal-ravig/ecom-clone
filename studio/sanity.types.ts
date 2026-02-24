@@ -13,6 +13,13 @@
  */
 
 // Source: schema.json
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+}
+
 export type ArticleCategoryReference = {
   _ref: string
   _type: 'reference'
@@ -27,11 +34,11 @@ export type UserReference = {
   [internalGroqTypeReferenceTo]?: 'user'
 }
 
-export type SanityImageAssetReference = {
+export type ProductReference = {
   _ref: string
   _type: 'reference'
   _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+  [internalGroqTypeReferenceTo]?: 'product'
 }
 
 export type Article = {
@@ -42,6 +49,13 @@ export type Article = {
   _rev: string
   title?: string
   slug?: Slug
+  headerImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
   categories?: Array<
     {
       _key: string
@@ -49,6 +63,11 @@ export type Article = {
   >
   author?: UserReference
   reviewedBy?: UserReference
+  relatedProducts?: Array<
+    {
+      _key: string
+    } & ProductReference
+  >
   publishedAt?: string
   updatedAt?: string
   description?: Array<
@@ -189,13 +208,6 @@ export type Variant = {
     value?: string
     _key: string
   }>
-}
-
-export type ProductReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'product'
 }
 
 export type Collection = {
@@ -469,9 +481,10 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | SanityImageAssetReference
   | ArticleCategoryReference
   | UserReference
-  | SanityImageAssetReference
+  | ProductReference
   | Article
   | SanityImageCrop
   | SanityImageHotspot
@@ -480,7 +493,6 @@ export type AllSanitySchemaTypes =
   | User
   | ProductQNA
   | Variant
-  | ProductReference
   | Collection
   | CategoryReference
   | BrandReference
