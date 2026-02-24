@@ -5,6 +5,14 @@ export default defineCliConfig({
     projectId: 'i9lae4hh',
     dataset: 'production'
   },
+  /**
+   * @see https://www.sanity.io/docs/help/configuring-typegen-in-sanity-cli-config
+   */
+  typegen: {
+    path: './**/*.{ts,tsx,js,jsx}',
+    schema: 'schema.json',
+    generates: './sanity.types.ts',
+  },
   deployment: {
     /**
      * Enable auto-updates for studios.

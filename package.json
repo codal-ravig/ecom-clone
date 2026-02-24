@@ -5,13 +5,12 @@
   "packageManager": "pnpm@10.29.3",
   "description": "Petco Clone Monorepo",
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
+    "dev": "pnpm -r dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
     "install:all": "pnpm install"
   },
   "devDependencies": {
-    "turbo": "latest"
   }
 }
