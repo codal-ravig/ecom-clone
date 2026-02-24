@@ -99,30 +99,7 @@ export const productType = defineType({
       group: 'attributes',
       of: [
         defineArrayMember({
-          type: 'object' as const,
-          fields: [
-            defineField({
-              name: 'review',
-              title: 'Review (Star Rating)',
-              type: 'number' as const,
-            }),
-            defineField({name: 'title', title: 'Title', type: 'string' as const}),
-            defineField({name: 'description', title: 'Description', type: 'text' as const}),
-            defineField({
-              name: 'images',
-              title: 'Images',
-              type: 'array' as const,
-              of: [
-                defineArrayMember({
-                  type: 'image' as const,
-                  options: {hotspot: true},
-                  fields: [defineField({name: 'alt', title: 'Alt Text', type: 'string' as const})],
-                }),
-              ],
-            }),
-            defineField({name: 'time', title: 'Time', type: 'datetime' as const}),
-            defineField({name: 'userDetails', title: 'User Details', type: 'string' as const}),
-          ],
+          type: 'review' as const,
         }),
       ],
     }),

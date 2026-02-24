@@ -414,6 +414,24 @@ export type User = {
   >
 }
 
+export type Review = {
+  _type: 'review'
+  review?: number
+  title?: string
+  description?: string
+  images?: Array<{
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  time?: string
+  userDetails?: string
+}
+
 export type ProductQNA = {
   _type: 'productQNA'
   nickname?: string
@@ -489,23 +507,11 @@ export type Product = {
   category?: CategoryReference
   subCategory?: CategoryReference
   childCategory?: CategoryReference
-  review?: Array<{
-    review?: number
-    title?: string
-    description?: string
-    images?: Array<{
-      asset?: SanityImageAssetReference
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      alt?: string
-      _type: 'image'
+  review?: Array<
+    {
       _key: string
-    }>
-    time?: string
-    userDetails?: string
-    _key: string
-  }>
+    } & Review
+  >
   productQNA?: Array<
     {
       _key: string
@@ -736,6 +742,7 @@ export type AllSanitySchemaTypes =
   | Article
   | ArticleCategory
   | User
+  | Review
   | ProductQNA
   | Variant
   | Collection
