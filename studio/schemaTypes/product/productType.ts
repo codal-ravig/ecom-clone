@@ -11,6 +11,7 @@ export const productType = defineType({
     {name: 'variants', title: 'Variants'},
     {name: 'attributes', title: 'Attributes'},
     {name: 'content', title: 'Detailed Content'},
+    {name: 'delivery', title: 'Delivery & Promotions'},
   ],
   preview: {
     select: {
@@ -50,7 +51,7 @@ export const productType = defineType({
     defineField({
       name: 'category',
       title: 'Main Category',
-      type: 'reference',
+      type: 'reference' as const,
       to: [{type: 'category'}],
       group: 'categorization',
       options: {
@@ -61,7 +62,7 @@ export const productType = defineType({
     defineField({
       name: 'subCategory',
       title: 'Sub Category',
-      type: 'reference',
+      type: 'reference' as const,
       to: [{type: 'category'}],
       group: 'categorization',
       options: {
@@ -78,7 +79,7 @@ export const productType = defineType({
     defineField({
       name: 'childCategory',
       title: 'Child Category',
-      type: 'reference',
+      type: 'reference' as const,
       to: [{type: 'category'}],
       group: 'categorization',
       options: {
@@ -122,6 +123,13 @@ export const productType = defineType({
       description: 'The default price for the product. Variants can override this.',
     }),
     defineField({
+      name: 'compareAtPrice',
+      title: 'Compare-at Price',
+      type: 'number' as const,
+      group: 'general',
+      description: 'Original "was" price shown crossed out. Used when no variants are defined.',
+    }),
+    defineField({
       name: 'stock',
       title: 'Total/Base Stock',
       type: 'number' as const,
@@ -151,7 +159,7 @@ export const productType = defineType({
     defineField({
       name: 'options',
       title: 'Product Options',
-      type: 'array',
+      type: 'array' as const,
       group: 'variants',
       description: 'Define dimensions like Color, Size, etc.',
       of: [defineArrayMember({type: 'productOption'})],
@@ -159,7 +167,7 @@ export const productType = defineType({
     defineField({
       name: 'variants',
       title: 'Product Variants (SKUs)',
-      type: 'array',
+      type: 'array' as const,
       group: 'variants',
       description: 'The actual combinations (Cartesian products) of the options defined above.',
       of: [defineArrayMember({type: 'productVariant'})],
@@ -229,6 +237,83 @@ export const productType = defineType({
       type: 'array' as const,
       group: 'content',
       of: [defineArrayMember({type: 'block' as const})],
+    }),
+    // ─── Delivery & Promotions ────────────────────────────────────────────
+    defineField({
+      name: 'deliveryMethods',
+      title: 'Delivery Methods',
+      type: 'array' as const,
+      group: 'delivery',
+      description: 'Configure which fulfilment options are available and their promo badge text.',
+      of: [
+        defineArrayMember({
+          type: 'object' as const,
+          fields: [
+            defineField({
+              name: 'method',
+              title: 'Method',
+              type: 'string' as const,
+              options: {
+                list: [
+                  {title: 'Pickup (In-Store)', value: 'Pickup'},
+                  {title: 'Same-Day Delivery', value: 'SameDay'},
+                  {title: 'Ship to Me', value: 'ShipToMe'},
+                ],
+                layout: 'radio',
+              },
+              validation: (Rule: any) => Rule.required(),
+            }),
+            defineField({
+              name: 'available',
+              title: 'Available',
+              type: 'boolean' as const,
+              initialValue: true,
+            }),
+            defineField({
+              name: 'badge',
+              title: 'Promo Badge',
+              type: 'string' as const,
+              description:
+                'Short promo label shown above the option, e.g. "10% off $50+" or "Free Same Day $35+"',
+            }),
+          ],
+          preview: {
+            select: {method: 'method', badge: 'badge', available: 'available'},
+            prepare({method, badge, available}: any) {
+              const labels: Record<string, string> = {
+                Pickup: '🏪 Pickup',
+                SameDay: '🚴 Same-Day',
+                ShipToMe: '📦 Ship to Me',
+              }
+              return {
+                title: labels[method] ?? method,
+                subtitle: badge
+                  ? `${badge}${available ? '' : ' (unavailable)'}`
+                  : available
+                    ? 'Available'
+                    : 'Unavailable',
+              }
+            },
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'repeatDeliveryDiscount',
+      title: 'Repeat Delivery Discount (%)',
+      type: 'number' as const,
+      group: 'delivery',
+      description: 'Ongoing % discount on all Repeat Delivery orders, e.g. 5 for 5% off.',
+      initialValue: 5,
+    }),
+    defineField({
+      name: 'repeatDeliveryFirstOrderDiscount',
+      title: 'First Repeat Delivery Discount (%)',
+      type: 'number' as const,
+      group: 'delivery',
+      description:
+        'Discount % for the very first Repeat Delivery order, e.g. 35 for 35% off (up to $20).',
+      initialValue: 35,
     }),
   ],
 })

@@ -12,7 +12,8 @@ export const productVariantType = defineType({
       name: 'combination',
       title: 'Select Combination',
       type: 'string',
-      description: 'Pick the specific combination of options for this variant (auto-generated from Product Options above).',
+      description:
+        'Pick the specific combination of options for this variant (auto-generated from Product Options above).',
       components: {
         input: CombinationInput,
       },
@@ -29,6 +30,13 @@ export const productVariantType = defineType({
       title: 'Price',
       type: 'number',
       description: 'If left empty, the base product price will be used.',
+    }),
+    defineField({
+      name: 'compareAtPrice',
+      title: 'Compare-at Price',
+      type: 'number',
+      description:
+        'Original "was" price shown crossed out (e.g. $15.99 crossed out, sale price $10.39). Leave empty if no sale.',
     }),
     defineField({
       name: 'stock',
