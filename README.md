@@ -17,7 +17,7 @@ The content model is designed to support deep nesting, data integrity, and a dyn
 
 ### 1. Products & Taxonomy
 - **Products (`product`):** Detailed schema including Title, Slug, Stock, Price, Images, **Reviews (with ratings and text)**, **Specifications**, **Features**, **Variants**, and **Q&A**.
-- **Taxonomy:** Hierarchical categorization with **Category** (Top-level), **Sub-Category**, and **Child Category** (Linked references with dependent filtering).
+- **Taxonomy:** Hierarchical categorization with **Category**, **Sub-Category**, and **Child Category**. Categories support a **Page Builder** to create dynamic landing pages (e.g., for "Dog" or "Cat" hubs).
 - **Brands:** Centrally managed brands with logos, referenced across products.
 
 ### 2. Pages & Articles
@@ -26,6 +26,8 @@ The content model is designed to support deep nesting, data integrity, and a dyn
   - **Grid Section:** Flexible layouts for content blocks.
   - **FAQ Section:** Frequently asked questions.
   - **Featured Products/Articles:** Showcasing specific items.
+  - **Trending/Best Sellers:** Category-specific automated product lists.
+  - **Most Viewed/Customers Also Bought:** Engagement-based category product sections.
   - **Info/Text Sections:** Standard content blocks.
 - **Articles (`article`):** Blog posts or informational content, categorized by **Article Categories**.
 

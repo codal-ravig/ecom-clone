@@ -21,6 +21,10 @@ import {featuredArticlesSection} from './page/sections/featuredArticlesSection'
 import {featuredProductsSection} from './page/sections/featuredProductsSection'
 import {contactHeroSection} from './page/sections/contactHeroSection'
 import {gridSection} from './page/sections/gridSection'
+import {trendingProductsSection} from './page/sections/trendingProductsSection'
+import {bestSellersSection} from './page/sections/bestSellersSection'
+import {mostViewedProductsSection} from './page/sections/mostViewedProductsSection'
+import {alsoBoughtProductsSection} from './page/sections/alsoBoughtProductsSection'
 import {headerType} from './settings/headerType'
 import {footerType} from './settings/footerType'
 
@@ -48,6 +52,10 @@ export const schemaTypes = [
   featuredProductsSection,
   contactHeroSection,
   gridSection,
+  trendingProductsSection,
+  bestSellersSection,
+  mostViewedProductsSection,
+  alsoBoughtProductsSection,
   headerType,
   footerType,
 ]

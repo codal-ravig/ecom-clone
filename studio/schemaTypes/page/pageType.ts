@@ -23,7 +23,7 @@ export const pageType = defineType({
     defineField({
       name: 'pageBuilder',
       title: 'Page Builder',
-      type: 'array',
+      type: 'array' as const,
       of: [
         defineArrayMember({type: 'heroSection'}),
         defineArrayMember({type: 'textSection'}),
@@ -33,6 +33,10 @@ export const pageType = defineType({
         defineArrayMember({type: 'featuredProductsSection'}),
         defineArrayMember({type: 'contactHeroSection'}),
         defineArrayMember({type: 'gridSection'}),
+        defineArrayMember({type: 'trendingProductsSection'}),
+        defineArrayMember({type: 'bestSellersSection'}),
+        defineArrayMember({type: 'mostViewedProductsSection'}),
+        defineArrayMember({type: 'alsoBoughtProductsSection'}),
       ],
     }),
   ],
