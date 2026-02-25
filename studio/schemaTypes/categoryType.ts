@@ -55,78 +55,46 @@ export const categoryType = defineType({
 
     defineField({
       name: 'trendingProducts',
+      description: 'The category to pull trending products from.',
       title: 'Trending Products Section',
-      type: 'object',
+      type: 'categoryPromotion',
       group: 'promotions',
-      fields: [
-        {name: 'active', title: 'Active', type: 'boolean', initialValue: true},
-        {name: 'heading', title: 'Heading', type: 'string', initialValue: 'Trending Products'},
-        {
-          name: 'products',
-          title: 'Products',
-          type: 'array',
-          of: [{type: 'reference', to: [{type: 'product'}]}],
-          description: 'Optionally select specific products to show in this section.',
-        },
-        {name: 'limit', title: 'Limit', type: 'number', initialValue: 8},
-      ],
+      initialValue: {
+        heading: 'Trending Products',
+      },
     }),
 
     defineField({
       name: 'bestSellers',
       title: 'Best Sellers Section',
-      type: 'object',
+      description: 'Best Sellers',
+      type: 'categoryPromotion',
       group: 'promotions',
-      fields: [
-        {name: 'active', title: 'Active', type: 'boolean', initialValue: true},
-        {name: 'heading', title: 'Heading', type: 'string', initialValue: 'Best Sellers'},
-        {
-          name: 'products',
-          title: 'Products',
-          type: 'array',
-          of: [{type: 'reference', to: [{type: 'product'}]}],
-          description: 'Optionally select specific products to show in this section.',
-        },
-        {name: 'limit', title: 'Limit', type: 'number', initialValue: 8},
-      ],
+      initialValue: {
+        heading: 'Best Sellers',
+      },
     }),
 
     defineField({
       name: 'mostViewed',
       title: 'Most Viewed Section',
-      type: 'object',
+       description: 'The category to pull most viewed products from.',
+      type: 'categoryPromotion',
       group: 'promotions',
-      fields: [
-        {name: 'active', title: 'Active', type: 'boolean', initialValue: true},
-        {name: 'heading', title: 'Heading', type: 'string', initialValue: 'Most Viewed'},
-        {
-          name: 'products',
-          title: 'Products',
-          type: 'array',
-          of: [{type: 'reference', to: [{type: 'product'}]}],
-          description: 'Optionally select specific products to show in this section.',
-        },
-        {name: 'limit', title: 'Limit', type: 'number', initialValue: 8},
-      ],
+      initialValue: {
+        heading: 'Most Viewed',
+      },
     }),
 
     defineField({
       name: 'alsoBought',
       title: 'Customers Also Bought Section',
-      type: 'object',
+      description: 'Customers Also Bought',
+      type: 'categoryPromotion',
       group: 'promotions',
-      fields: [
-        {name: 'active', title: 'Active', type: 'boolean', initialValue: true},
-        {name: 'heading', title: 'Heading', type: 'string', initialValue: 'Customers Also Bought'},
-        {
-          name: 'products',
-          title: 'Products',
-          type: 'array',
-          of: [{type: 'reference', to: [{type: 'product'}]}],
-          description: 'Optionally select specific products to show in this section.',
-        },
-        {name: 'limit', title: 'Limit', type: 'number', initialValue: 8},
-      ],
+      initialValue: {
+        heading: 'Customers Also Bought',
+      },
     }),
   ],
   groups: [{name: 'promotions', title: 'Promotional Sections'}],

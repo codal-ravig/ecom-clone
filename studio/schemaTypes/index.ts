@@ -9,6 +9,7 @@ import {productAnswerType} from './product/productAnswerType'
 import {reviewType} from './product/reviewType'
 import {productSpecificationType} from './product/productSpecificationType'
 import {productFeatureType} from './product/productFeatureType'
+import {categoryPromotionType} from './product/categoryPromotionType'
 import {userType} from './Users/UserType'
 import {articleCategoryType} from './article/articleCategory'
 import {articleType} from './article/articleType'
@@ -18,13 +19,8 @@ import {textSection} from './page/sections/textSection'
 import {infoSection} from './page/sections/infoSection'
 import {faqSection} from './page/sections/faqSection'
 import {featuredArticlesSection} from './page/sections/featuredArticlesSection'
-import {featuredProductsSection} from './page/sections/featuredProductsSection'
 import {contactHeroSection} from './page/sections/contactHeroSection'
 import {gridSection} from './page/sections/gridSection'
-import {trendingProductsSection} from './page/sections/trendingProductsSection'
-import {bestSellersSection} from './page/sections/bestSellersSection'
-import {mostViewedProductsSection} from './page/sections/mostViewedProductsSection'
-import {alsoBoughtProductsSection} from './page/sections/alsoBoughtProductsSection'
 import {headerType} from './settings/headerType'
 import {footerType} from './settings/footerType'
 
@@ -40,6 +36,7 @@ export const schemaTypes = [
   reviewType,
   productSpecificationType,
   productFeatureType,
+  categoryPromotionType,
   userType,
   articleCategoryType,
   articleType,
@@ -49,13 +46,8 @@ export const schemaTypes = [
   infoSection,
   faqSection,
   featuredArticlesSection,
-  featuredProductsSection,
   contactHeroSection,
   gridSection,
-  trendingProductsSection,
-  bestSellersSection,
-  mostViewedProductsSection,
-  alsoBoughtProductsSection,
   headerType,
   footerType,
 ]

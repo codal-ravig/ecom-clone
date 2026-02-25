@@ -116,23 +116,6 @@ export type ContactHeroSection = {
   }
 }
 
-export type ProductReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'product'
-}
-
-export type FeaturedProductsSection = {
-  _type: 'featuredProductsSection'
-  heading?: string
-  products?: Array<
-    {
-      _key: string
-    } & ProductReference
-  >
-}
-
 export type ArticleReference = {
   _ref: string
   _type: 'reference'
@@ -265,9 +248,6 @@ export type Page = {
       } & FeaturedArticlesSection)
     | ({
         _key: string
-      } & FeaturedProductsSection)
-    | ({
-        _key: string
       } & ContactHeroSection)
     | ({
         _key: string
@@ -293,6 +273,13 @@ export type UserReference = {
   _type: 'reference'
   _weak?: boolean
   [internalGroqTypeReferenceTo]?: 'user'
+}
+
+export type ProductReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'product'
 }
 
 export type Article = {
@@ -414,11 +401,50 @@ export type User = {
   >
 }
 
+export type CategoryPromotion = {
+  _type: 'categoryPromotion'
+  active?: boolean
+  heading?: string
+  products?: Array<
+    {
+      _key: string
+    } & ProductReference
+  >
+  limit?: number
+}
+
+export type ProductFeature = {
+  _type: 'productFeature'
+  key?: string
+  value?: string
+}
+
+export type BrandReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'brand'
+}
+
+export type ProductSpecification = {
+  _type: 'productSpecification'
+  sku?: string
+  brand?: BrandReference
+  daysToShip?: number
+  lifestage?: string
+  primaryFlavor?: string
+  weight?: string
+  heightIn?: number
+  widthIn?: number
+}
+
 export type Review = {
   _type: 'review'
   review?: number
   title?: string
   description?: string
+  nickname?: string
+  email?: string
   images?: Array<{
     asset?: SanityImageAssetReference
     media?: unknown
@@ -429,7 +455,16 @@ export type Review = {
     _key: string
   }>
   time?: string
-  userDetails?: string
+}
+
+export type ProductAnswer = {
+  _type: 'productAnswer'
+  nickname?: string
+  answer?: string
+  email?: string
+  location?: string
+  helpful?: number
+  notHelpful?: number
 }
 
 export type ProductQNA = {
@@ -438,26 +473,35 @@ export type ProductQNA = {
   question?: string
   email?: string
   location?: string
-  answers?: Array<{
-    nickname?: string
-    answer?: string
-    email?: string
-    location?: string
-    helpful?: number
-    notHelpful?: number
+  answers?: Array<
+    {
+      _key: string
+    } & ProductAnswer
+  >
+}
+
+export type ProductVariant = {
+  _type: 'productVariant'
+  combination?: string
+  name?: string
+  price?: number
+  compareAtPrice?: number
+  stock?: number
+  sku?: string
+  images?: Array<{
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
     _key: string
   }>
 }
 
-export type Variant = {
-  _type: 'variant'
+export type ProductOption = {
+  _type: 'productOption'
   name?: string
-  key?: string
-  values?: Array<{
-    price?: number
-    value?: string
-    _key: string
-  }>
+  values?: Array<string>
 }
 
 export type Collection = {
@@ -482,18 +526,28 @@ export type Collection = {
   >
 }
 
+export type Brand = {
+  _id: string
+  _type: 'brand'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  slug?: Slug
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+}
+
 export type CategoryReference = {
   _ref: string
   _type: 'reference'
   _weak?: boolean
   [internalGroqTypeReferenceTo]?: 'category'
-}
-
-export type BrandReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'brand'
 }
 
 export type Product = {
@@ -517,6 +571,8 @@ export type Product = {
       _key: string
     } & ProductQNA
   >
+  price?: number
+  compareAtPrice?: number
   stock?: number
   images?: Array<{
     asset?: SanityImageAssetReference
@@ -545,22 +601,22 @@ export type Product = {
     _type: 'block'
     _key: string
   }>
-  price?: number
-  variant?: Array<
+  options?: Array<
     {
       _key: string
-    } & Variant
+    } & ProductOption
   >
-  specifications?: {
-    sku?: string
-    brand?: BrandReference
-    daysToShip?: number
-  }
-  additionalFeatures?: Array<{
-    key?: string
-    value?: string
-    _key: string
-  }>
+  variants?: Array<
+    {
+      _key: string
+    } & ProductVariant
+  >
+  specifications?: ProductSpecification
+  additionalFeatures?: Array<
+    {
+      _key: string
+    } & ProductFeature
+  >
   warranty?: string
   directions?: string
   warnings?: string
@@ -584,23 +640,14 @@ export type Product = {
     _type: 'block'
     _key: string
   }>
-}
-
-export type Brand = {
-  _id: string
-  _type: 'brand'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name?: string
-  slug?: Slug
-  image?: {
-    asset?: SanityImageAssetReference
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
+  deliveryMethods?: Array<{
+    method?: 'Pickup' | 'SameDay' | 'ShipToMe'
+    available?: boolean
+    badge?: string
+    _key: string
+  }>
+  repeatDeliveryDiscount?: number
+  repeatDeliveryFirstOrderDiscount?: number
 }
 
 export type Category = {
@@ -619,6 +666,15 @@ export type Category = {
     _type: 'image'
   }
   parent?: CategoryReference
+  featuredProducts?: Array<
+    {
+      _key: string
+    } & ProductReference
+  >
+  trendingProducts?: CategoryPromotion
+  bestSellers?: CategoryPromotion
+  mostViewed?: CategoryPromotion
+  alsoBought?: CategoryPromotion
 }
 
 export type SanityImagePaletteSwatch = {
@@ -727,8 +783,6 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | GridSection
   | ContactHeroSection
-  | ProductReference
-  | FeaturedProductsSection
   | ArticleReference
   | FeaturedArticlesSection
   | FaqSection
@@ -739,17 +793,23 @@ export type AllSanitySchemaTypes =
   | Slug
   | ArticleCategoryReference
   | UserReference
+  | ProductReference
   | Article
   | ArticleCategory
   | User
-  | Review
-  | ProductQNA
-  | Variant
-  | Collection
-  | CategoryReference
+  | CategoryPromotion
+  | ProductFeature
   | BrandReference
-  | Product
+  | ProductSpecification
+  | Review
+  | ProductAnswer
+  | ProductQNA
+  | ProductVariant
+  | ProductOption
+  | Collection
   | Brand
+  | CategoryReference
+  | Product
   | Category
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -770,7 +830,7 @@ export type ProductWithVariantValuesResult = Array<{
   price: number | null
   totalCount: null
   avgStar: 0
-  variants: Array<null> | null
+  variants: null
 }>
 
 // Source: queries/product.ts
@@ -781,7 +841,7 @@ export type ProductVariantDataResult = Array<{
   price: number | null
   totalCount: null
   avgStar: 0
-  variants: Array<null> | null
+  variants: null
 }>
 
 // Query TypeMap
