@@ -3,8 +3,12 @@ import {brandType} from './brandType'
 import {collectionType} from './collectionType'
 import {productType} from './product/productType'
 import {variantType} from './product/variantType'
+import {variantValueType} from './product/variantValueType'
 import {productQNA} from './product/productQNAType'
+import {productAnswerType} from './product/productAnswerType'
 import {reviewType} from './product/reviewType'
+import {productSpecificationType} from './product/productSpecificationType'
+import {productFeatureType} from './product/productFeatureType'
 import {userType} from './Users/UserType'
 import {articleCategoryType} from './article/articleCategory'
 import {articleType} from './article/articleType'
@@ -26,8 +30,12 @@ export const schemaTypes = [
   brandType,
   collectionType,
   variantType,
+  variantValueType,
   productQNA,
+  productAnswerType,
   reviewType,
+  productSpecificationType,
+  productFeatureType,
   userType,
   articleCategoryType,
   articleType,

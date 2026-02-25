@@ -160,18 +160,8 @@ export const productType = defineType({
     defineField({
       name: 'specifications',
       title: 'Specifications',
-      type: 'object' as const,
+      type: 'productSpecification' as const,
       group: 'attributes',
-      fields: [
-        defineField({name: 'sku', title: 'SKU', type: 'string' as const}),
-        defineField({
-          name: 'brand',
-          title: 'Brand',
-          type: 'reference' as const,
-          to: [{type: 'brand' as const}],
-        }),
-        defineField({name: 'daysToShip', title: 'Days to Ship', type: 'number' as const}),
-      ],
     }),
     defineField({
       name: 'additionalFeatures',
@@ -180,11 +170,7 @@ export const productType = defineType({
       group: 'attributes',
       of: [
         defineArrayMember({
-          type: 'object' as const,
-          fields: [
-            defineField({name: 'key', title: 'Key', type: 'string' as const}),
-            defineField({name: 'value', title: 'Value', type: 'string' as const}),
-          ],
+          type: 'productFeature' as const,
         }),
       ],
     }),

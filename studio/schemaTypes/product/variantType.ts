@@ -26,19 +26,7 @@ export const variantType = defineType({
       type: 'array',
       of: [
         defineArrayMember({
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'price',
-              title: 'Price',
-              type: 'number',
-            }),
-            defineField({
-              name: 'value',
-              title: 'Value',
-              type: 'string',
-            }),
-          ],
+          type: 'variantValue',
         }),
       ],
     }),

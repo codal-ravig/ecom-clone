@@ -1,25 +1,24 @@
-import {defineArrayMember, defineField, defineType} from 'sanity'
-import {FaQuestion} from 'react-icons/fa'
-export const productQNA = defineType({
-  name: 'productQNA',
-  title: 'Product Q&A',
+import {defineField, defineType} from 'sanity'
+import {SiAnswer} from 'react-icons/si'
+
+export const productAnswerType = defineType({
+  name: 'productAnswer',
+  title: 'Product Answer',
   type: 'object',
-  icon: FaQuestion,
+  icon: SiAnswer,
   fields: [
     defineField({
       name: 'nickname',
-      title: 'Asked By',
+      title: 'Answered By',
       type: 'string',
       validation: (Rule) => Rule.required().max(25),
     }),
-
     defineField({
-      name: 'question',
-      title: 'Question',
+      name: 'answer',
+      title: 'Answer',
       type: 'text',
       validation: (Rule) => Rule.required(),
     }),
-
     defineField({
       name: 'email',
       title: 'Email (Private)',
@@ -32,14 +31,16 @@ export const productQNA = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'answers',
-      title: 'Answers',
-      type: 'array',
-      of: [
-        defineArrayMember({
-          type: 'productAnswer',
-        }),
-      ],
+      name: 'helpful',
+      title: 'Helpful (Yes)',
+      type: 'number',
+      initialValue: 0,
+    }),
+    defineField({
+      name: 'notHelpful',
+      title: 'Not Helpful (No)',
+      type: 'number',
+      initialValue: 0,
     }),
   ],
 })
