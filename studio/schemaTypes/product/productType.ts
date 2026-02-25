@@ -23,7 +23,7 @@ export const productType = defineType({
       const {title, price, stock, media} = selection
       return {
         title,
-        subtitle: `₹${price ?? 0} • Stock: ${stock ?? 0}`,
+        subtitle: `Price:${price ?? 0} • Stock: ${stock ?? 0}`,
         media,
       }
     },
@@ -115,10 +115,18 @@ export const productType = defineType({
       ],
     }),
     defineField({
-      name: 'stock',
-      title: 'Stock',
+      name: 'price',
+      title: 'Base Price',
       type: 'number' as const,
       group: 'general',
+      description: 'The default price for the product. Variants can override this.',
+    }),
+    defineField({
+      name: 'stock',
+      title: 'Total/Base Stock',
+      type: 'number' as const,
+      group: 'general',
+      description: 'Used if no variants are defined.',
     }),
     defineField({
       name: 'images',
@@ -141,21 +149,32 @@ export const productType = defineType({
       of: [defineArrayMember({type: 'block' as const})],
     }),
     defineField({
-      name: 'price',
-      title: 'Price',
-      type: 'number' as const,
-      group: 'general',
-    }),
-    defineField({
-      name: 'variant',
-      title: 'Variant',
+      name: 'options',
+      title: 'Product Options',
       type: 'array',
       group: 'variants',
-      of: [
-        defineArrayMember({
-          type: 'variant' as const,
+      description: 'Define dimensions like Color, Size, etc.',
+      of: [defineArrayMember({type: 'productOption'})],
+    }),
+    defineField({
+      name: 'variants',
+      title: 'Product Variants (SKUs)',
+      type: 'array',
+      group: 'variants',
+      description: 'The actual combinations (Cartesian products) of the options defined above.',
+      of: [defineArrayMember({type: 'productVariant'})],
+      validation: (Rule: any) =>
+        Rule.custom((variants: any[]) => {
+          if (!variants) return true
+          const combinations = variants.map((v) => v.combination).filter(Boolean)
+          const duplicates = combinations.filter(
+            (item, index) => combinations.indexOf(item) !== index,
+          )
+          if (duplicates.length > 0) {
+            return `Duplicate combinations found: ${duplicates.join(', ')}`
+          }
+          return true
         }),
-      ],
     }),
     defineField({
       name: 'specifications',
