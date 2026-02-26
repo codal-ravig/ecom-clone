@@ -20,12 +20,14 @@ export const categoryType = defineType({
       name: 'name',
       title: 'Name',
       type: 'string',
+      group: 'content',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      group: 'content',
       options: { source: 'name' },
       validation: (Rule) => Rule.required(),
     }),
@@ -33,6 +35,7 @@ export const categoryType = defineType({
       name: 'image',
       title: 'Image',
       type: 'image',
+      group: 'content',
       options: { hotspot: true },
     }),
 
@@ -41,7 +44,15 @@ export const categoryType = defineType({
       title: 'Parent Category',
       type: 'reference',
       to: [{ type: 'category' }],
+      group: 'content',
       description: 'Leave empty if top level category',
+    }),
+
+    defineField({
+      name: 'seo',
+      title: 'SEO Settings',
+      type: 'seo',
+      group: 'seo',
     }),
 
     defineField({
@@ -97,5 +108,9 @@ export const categoryType = defineType({
       },
     }),
   ],
-  groups: [{name: 'promotions', title: 'Promotional Sections'}],
+  groups: [
+    { name: 'content', title: 'Content', default: true },
+    { name: 'promotions', title: 'Promotional Sections' },
+    { name: 'seo', title: 'SEO' },
+  ],
 })

@@ -23,6 +23,7 @@ import {contactHeroSection} from './page/sections/contactHeroSection'
 import {gridSection} from './page/sections/gridSection'
 import {headerType} from './settings/headerType'
 import {footerType} from './settings/footerType'
+import {seoType} from './seoType'
 
 export const schemaTypes = [
   productType,
@@ -50,4 +51,5 @@ export const schemaTypes = [
   gridSection,
   headerType,
   footerType,
+  seoType,
 ]

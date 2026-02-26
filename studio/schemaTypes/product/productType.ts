@@ -12,6 +12,7 @@ export const productType = defineType({
     {name: 'attributes', title: 'Attributes'},
     {name: 'content', title: 'Detailed Content'},
     {name: 'delivery', title: 'Delivery & Promotions'},
+    {name: 'seo', title: 'SEO'},
   ],
   preview: {
     select: {
@@ -314,6 +315,12 @@ export const productType = defineType({
       description:
         'Discount % for the very first Repeat Delivery order, e.g. 35 for 35% off (up to $20).',
       initialValue: 35,
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO Settings',
+      type: 'seo',
+      group: 'seo',
     }),
   ],
 })
