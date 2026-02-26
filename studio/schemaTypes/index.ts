@@ -21,6 +21,8 @@ import {faqSection} from './page/sections/faqSection'
 import {featuredArticlesSection} from './page/sections/featuredArticlesSection'
 import {contactHeroSection} from './page/sections/contactHeroSection'
 import {gridSection} from './page/sections/gridSection'
+import {espotSection} from './page/sections/espotSection'
+import {productListSection} from './page/sections/productListSection'
 import {headerType} from './settings/headerType'
 import {footerType} from './settings/footerType'
 import {seoType} from './seoType'
@@ -50,6 +52,8 @@ export const schemaTypes = [
   featuredArticlesSection,
   contactHeroSection,
   gridSection,
+  espotSection,
+  productListSection,
   headerType,
   footerType,
   seoType,

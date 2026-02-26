@@ -6,24 +6,37 @@ export const pageType = defineType({
   title: 'Page',
   type: 'document',
   icon: FaDesktop,
+  groups: [
+    {name: 'content', title: 'Content', default: true},
+    {name: 'seo', title: 'SEO'},
+  ],
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
+      group: 'content',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      group: 'content',
       options: {source: 'title'},
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO Settings',
+      type: 'seo',
+      group: 'seo',
     }),
     defineField({
       name: 'pageBuilder',
       title: 'Page Builder',
       type: 'array' as const,
+      group: 'content',
       of: [
         defineArrayMember({type: 'heroSection'}),
         defineArrayMember({type: 'textSection'}),
@@ -32,6 +45,8 @@ export const pageType = defineType({
         defineArrayMember({type: 'featuredArticlesSection'}),
         defineArrayMember({type: 'contactHeroSection'}),
         defineArrayMember({type: 'gridSection'}),
+        defineArrayMember({type: 'espotSection'}),
+        defineArrayMember({type: 'productListSection'}),
       ],
     }),
   ],

@@ -35,5 +35,12 @@ export const seoType = defineType({
       type: 'boolean',
       initialValue: false
     }),
+    defineField({
+      name: 'structuredData',
+      title: 'Structured Data (JSON-LD)',
+      type: 'text',
+      description: 'Custom JSON-LD for schema.org markup. Do not include <script> tags.',
+      rows: 5,
+    }),
   ]
 });
