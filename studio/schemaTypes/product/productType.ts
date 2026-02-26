@@ -13,6 +13,7 @@ export const productType = defineType({
     {name: 'content', title: 'Detailed Content'},
     {name: 'delivery', title: 'Delivery & Promotions'},
     {name: 'seo', title: 'SEO'},
+    {name: 'relatedContent', title: 'Related Content'},
   ],
   preview: {
     select: {
@@ -93,6 +94,62 @@ export const productType = defineType({
         },
       },
       hidden: ({document}: any) => !document.subCategory,
+    }),
+    defineField({
+      name: 'petType',
+      title: 'Pet Type',
+      type: 'string' as const,
+      group: 'categorization',
+      options: {
+        list: [
+          {title: 'Dog', value: 'dog'},
+          {title: 'Cat', value: 'cat'},
+          {title: 'Fish', value: 'fish'},
+          {title: 'Bird', value: 'bird'},
+          {title: 'Reptile', value: 'reptile'},
+          {title: 'Small Pet', value: 'small-pet'},
+        ],
+      },
+    }),
+    defineField({
+      name: 'lifeStage',
+      title: 'Life Stage',
+      type: 'string' as const,
+      group: 'categorization',
+      options: {
+        list: [
+          {title: 'Puppy / Kitten', value: 'junior'},
+          {title: 'Adult', value: 'adult'},
+          {title: 'Senior', value: 'senior'},
+          {title: 'All Life Stages', value: 'all'},
+        ],
+      },
+    }),
+    defineField({
+      name: 'healthConsiderations',
+      title: 'Health Considerations',
+      type: 'array' as const,
+      group: 'categorization',
+      of: [{type: 'string'}],
+      options: {
+        layout: 'tags',
+      },
+    }),
+    defineField({
+      name: 'badges',
+      title: 'Product Badges',
+      type: 'array' as const,
+      group: 'general',
+      of: [{type: 'string'}],
+      options: {
+        list: [
+          {title: 'New', value: 'new'},
+          {title: 'Sale', value: 'sale'},
+          {title: 'Natural', value: 'natural'},
+          {title: 'Grain-Free', value: 'grain-free'},
+          {title: 'Top Rated', value: 'top-rated'},
+        ],
+      },
     }),
     defineField({
       name: 'review',
@@ -321,6 +378,19 @@ export const productType = defineType({
       title: 'SEO Settings',
       type: 'seo',
       group: 'seo',
+    }),
+    defineField({
+      name: 'relatedArticles',
+      title: 'Related Articles',
+      type: 'array',
+      group: 'relatedContent',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{type: 'article'}],
+        }),
+      ],
+      description: 'Educational articles or guides related to this product.',
     }),
   ],
 })

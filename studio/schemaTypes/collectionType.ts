@@ -1,9 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { MdCollections } from "react-icons/md";
 
 export const collectionType = defineType({
   name: 'collection',
   title: 'Collection',
   type: 'document',
+  icon: MdCollections,
   fields: [
     defineField({
       name: 'title',

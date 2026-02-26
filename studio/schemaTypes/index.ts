@@ -24,6 +24,7 @@ import {gridSection} from './page/sections/gridSection'
 import {headerType} from './settings/headerType'
 import {footerType} from './settings/footerType'
 import {seoType} from './seoType'
+import {promotionType} from './promotionType'
 
 export const schemaTypes = [
   productType,
@@ -52,4 +53,5 @@ export const schemaTypes = [
   headerType,
   footerType,
   seoType,
+  promotionType,
 ]

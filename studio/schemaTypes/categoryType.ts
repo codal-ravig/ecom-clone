@@ -1,9 +1,11 @@
 import { defineField, defineType } from "sanity";
+import { MdCategory } from "react-icons/md";
 
 export const categoryType = defineType({
   name: 'category',
   title: 'Category',
   type: 'document',
+  icon: MdCategory,
   preview: {
     select: {
       title: 'name',
