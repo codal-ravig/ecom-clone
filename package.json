@@ -2,7 +2,7 @@
   "name": "petco-monorepo",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@10.29.3",
+  "packageManager": "pnpm@10.31.0",
   "description": "Petco Clone Monorepo",
   "scripts": {
     "dev": "pnpm -r dev",
@@ -10,7 +10,5 @@
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
     "install:all": "pnpm install"
-  },
-  "devDependencies": {
   }
 }

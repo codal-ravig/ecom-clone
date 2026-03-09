@@ -52,5 +52,11 @@ export const productSpecificationType = defineType({
       type: 'number',
       description: 'Item width in inches, e.g. 8',
     }),
+    defineField({
+      name: 'depthIn',
+      title: 'Depth (inches)',
+      type: 'number',
+      description: 'Item depth in inches, e.g. 2',
+    }),
   ],
 })
