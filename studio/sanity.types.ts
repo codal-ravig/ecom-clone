@@ -28,6 +28,45 @@ export type Icon = {
   _type: 'image'
 }
 
+export type Promotion = {
+  _id: string
+  _type: 'promotion'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  text?: string
+  link?: string
+  type?: 'announcement' | 'hero' | 'ribbon'
+  backgroundColor?: Color
+  isActive?: boolean
+}
+
+export type Color = {
+  _type: 'color'
+  hex?: string
+  alpha?: number
+  hsl?: HslaColor
+  hsv?: HsvaColor
+  rgb?: RgbaColor
+}
+
+export type Seo = {
+  _type: 'seo'
+  title?: string
+  description?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  canonicalUrl?: string
+  noIndex?: boolean
+  structuredData?: string
+}
+
 export type Footer = {
   _id: string
   _type: 'footer'
@@ -86,6 +125,39 @@ export type SanityImageHotspot = {
   y?: number
   height?: number
   width?: number
+}
+
+export type CategoryReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'category'
+}
+
+export type ProductReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'product'
+}
+
+export type ProductListSection = {
+  _type: 'productListSection'
+  heading?: string
+  category?: CategoryReference
+  products?: Array<
+    {
+      _key: string
+    } & ProductReference
+  >
+  limit?: number
+}
+
+export type EspotSection = {
+  _type: 'espotSection'
+  name?: string
+  html?: string
+  previewUrl?: string
 }
 
 export type GridSection = {
@@ -230,6 +302,7 @@ export type Page = {
   _rev: string
   title?: string
   slug?: Slug
+  seo?: Seo
   pageBuilder?: Array<
     | ({
         _key: string
@@ -252,6 +325,12 @@ export type Page = {
     | ({
         _key: string
       } & GridSection)
+    | ({
+        _key: string
+      } & EspotSection)
+    | ({
+        _key: string
+      } & ProductListSection)
   >
 }
 
@@ -273,13 +352,6 @@ export type UserReference = {
   _type: 'reference'
   _weak?: boolean
   [internalGroqTypeReferenceTo]?: 'user'
-}
-
-export type ProductReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'product'
 }
 
 export type Article = {
@@ -436,6 +508,7 @@ export type ProductSpecification = {
   weight?: string
   heightIn?: number
   widthIn?: number
+  depthIn?: number
 }
 
 export type Review = {
@@ -526,30 +599,6 @@ export type Collection = {
   >
 }
 
-export type Brand = {
-  _id: string
-  _type: 'brand'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name?: string
-  slug?: Slug
-  image?: {
-    asset?: SanityImageAssetReference
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
-}
-
-export type CategoryReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'category'
-}
-
 export type Product = {
   _id: string
   _type: 'product'
@@ -561,6 +610,10 @@ export type Product = {
   category?: CategoryReference
   subCategory?: CategoryReference
   childCategory?: CategoryReference
+  petType?: 'dog' | 'cat' | 'fish' | 'bird' | 'reptile' | 'small-pet'
+  lifeStage?: 'junior' | 'adult' | 'senior' | 'all'
+  healthConsiderations?: Array<string>
+  badges?: Array<string>
   review?: Array<
     {
       _key: string
@@ -572,8 +625,16 @@ export type Product = {
     } & ProductQNA
   >
   price?: number
-  compareAtPrice?: number
+  discountPercentage?: number
+  rating?: number
   stock?: number
+  brand?: BrandReference
+  sku?: string
+  barcode?: string
+  availabilityStatus?: string
+  returnPolicy?: string
+  shippingInformation?: string
+  minimumOrderQuantity?: number
   images?: Array<{
     asset?: SanityImageAssetReference
     media?: unknown
@@ -648,6 +709,38 @@ export type Product = {
   }>
   repeatDeliveryDiscount?: number
   repeatDeliveryFirstOrderDiscount?: number
+  seo?: Seo
+  relatedArticles?: Array<
+    {
+      _key: string
+    } & ArticleReference
+  >
+}
+
+export type Brand = {
+  _id: string
+  _type: 'brand'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  slug?: Slug
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  bannerImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  description?: string
+  seo?: Seo
 }
 
 export type Category = {
@@ -666,6 +759,7 @@ export type Category = {
     _type: 'image'
   }
   parent?: CategoryReference
+  seo?: Seo
   featuredProducts?: Array<
     {
       _key: string
@@ -675,6 +769,30 @@ export type Category = {
   bestSellers?: CategoryPromotion
   mostViewed?: CategoryPromotion
   alsoBought?: CategoryPromotion
+}
+
+export type RgbaColor = {
+  _type: 'rgbaColor'
+  r?: number
+  g?: number
+  b?: number
+  a?: number
+}
+
+export type HsvaColor = {
+  _type: 'hsvaColor'
+  h?: number
+  s?: number
+  v?: number
+  a?: number
+}
+
+export type HslaColor = {
+  _type: 'hslaColor'
+  h?: number
+  s?: number
+  l?: number
+  a?: number
 }
 
 export type SanityImagePaletteSwatch = {
@@ -777,10 +895,17 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Icon
+  | Promotion
+  | Color
+  | Seo
   | Footer
   | Header
   | SanityImageCrop
   | SanityImageHotspot
+  | CategoryReference
+  | ProductReference
+  | ProductListSection
+  | EspotSection
   | GridSection
   | ContactHeroSection
   | ArticleReference
@@ -793,7 +918,6 @@ export type AllSanitySchemaTypes =
   | Slug
   | ArticleCategoryReference
   | UserReference
-  | ProductReference
   | Article
   | ArticleCategory
   | User
@@ -807,10 +931,12 @@ export type AllSanitySchemaTypes =
   | ProductVariant
   | ProductOption
   | Collection
-  | Brand
-  | CategoryReference
   | Product
+  | Brand
   | Category
+  | RgbaColor
+  | HsvaColor
+  | HslaColor
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
