@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { MdPets } from "react-icons/md";
+import { PetTypeInput } from './PetTypeInput';
 
 export const petProfileType = defineType({
   name: 'petProfile',
@@ -7,13 +8,6 @@ export const petProfileType = defineType({
   type: 'document',
   icon: MdPets,
   fields: [
-    defineField({
-      name: 'owner',
-      title: 'Owner',
-      type: 'reference',
-      to: [{ type: 'user' }],
-      description: 'The user who owns this pet.',
-    }),
     defineField({
       name: 'name',
       title: 'Pet Name',
@@ -24,16 +18,9 @@ export const petProfileType = defineType({
       name: 'petType',
       title: 'Pet Type',
       type: 'string',
-      options: {
-        list: [
-          {title: 'Dog', value: 'dog'},
-          {title: 'Cat', value: 'cat'},
-          {title: 'Fish', value: 'fish'},
-          {title: 'Bird', value: 'bird'},
-          {title: 'Reptile', value: 'reptile'},
-          {title: 'Small Pet', value: 'small-pet'},
-        ],
-      },
+       components: {                                                                                                    
+      input: PetTypeInput,                                                                                              
+         },  
       validation: (Rule) => Rule.required(),
     }),
     defineField({
