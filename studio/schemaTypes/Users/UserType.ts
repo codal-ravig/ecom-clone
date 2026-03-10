@@ -52,5 +52,12 @@ export const userType = defineType({
           ]
         }]
     }),
+    defineField({
+      name: 'pets',
+      title: 'My Pets',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'petProfile' }] }],
+      description: 'The pets owned by this user.',
+    }),
   ],
 })

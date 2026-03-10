@@ -47,6 +47,8 @@ export const pageType = defineType({
         defineArrayMember({type: 'gridSection'}),
         defineArrayMember({type: 'espotSection'}),
         defineArrayMember({type: 'productListSection'}),
+        defineArrayMember({type: 'membershipSection'}),
+        defineArrayMember({type: 'serviceGridSection'}),
       ],
     }),
   ],

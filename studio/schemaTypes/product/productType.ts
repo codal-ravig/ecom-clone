@@ -158,7 +158,8 @@ export const productType = defineType({
       group: 'attributes',
       of: [
         defineArrayMember({
-          type: 'review' as const,
+          type: 'reference' as const,
+          to: [{type: 'review'}],
         }),
       ],
     }),
@@ -169,7 +170,8 @@ export const productType = defineType({
       group: 'attributes',
       of: [
         defineArrayMember({
-          type: 'productQNA' as const,
+          type: 'reference' as const,
+          to: [{type: 'productQNA'}],
         }),
       ],
     }),
@@ -307,6 +309,31 @@ export const productType = defineType({
           type: 'productFeature' as const,
         }),
       ],
+    }),
+    // ─── Pharmacy ────────────────────────────────────────────────────────
+    defineField({
+      name: 'requiresPrescription',
+      title: 'Requires Prescription',
+      type: 'boolean' as const,
+      group: 'attributes',
+      initialValue: false,
+      description: 'Is this a Pharmacy product requiring veterinary approval?',
+    }),
+    defineField({
+      name: 'dosageForm',
+      title: 'Dosage Form',
+      type: 'string' as const,
+      group: 'attributes',
+      options: {
+        list: [
+          {title: 'Tablet', value: 'tablet'},
+          {title: 'Chewable', value: 'chewable'},
+          {title: 'Topical', value: 'topical'},
+          {title: 'Injectable', value: 'injectable'},
+          {title: 'Oral Suspension', value: 'oral-suspension'},
+        ],
+      },
+      hidden: ({document}: any) => !document.requiresPrescription,
     }),
     defineField({
       name: 'warranty',

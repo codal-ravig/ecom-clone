@@ -42,6 +42,25 @@ export const brandType = defineType({
       description: 'Used for the brand landing page header.',
     }),
     defineField({
+      name: 'petTypes',
+      title: 'Pet Types',
+      type: 'array',
+      group: 'content',
+      of: [{type: 'string'}],
+      options: {
+        list: [
+          {title: 'Dog', value: 'dog'},
+          {title: 'Cat', value: 'cat'},
+          {title: 'Fish', value: 'fish'},
+          {title: 'Bird', value: 'bird'},
+          {title: 'Reptile', value: 'reptile'},
+          {title: 'Small Pet', value: 'small-pet'},
+        ],
+        layout: 'tags',
+      },
+      description: 'The pets this brand provides products for.',
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',

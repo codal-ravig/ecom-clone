@@ -3,17 +3,27 @@ import {FaStar} from 'react-icons/fa'
 
 export const reviewType = defineType({
   name: 'review',
-  title: 'Review',
-  type: 'object',
+  title: 'Customer Review',
+  type: 'document',
   icon: FaStar,
   fields: [
     defineField({
-      name: 'review',
-      title: 'Review (Star Rating)',
+      name: 'product',
+      title: 'Product',
+      type: 'reference',
+      to: [{ type: 'product' }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'rating',
+      title: 'Rating',
       type: 'number',
+      options: {
+        list: [1, 2, 3, 4, 5],
+      },
     }),
     defineField({name: 'title', title: 'Title', type: 'string'}),
-    defineField({name: 'description', title: 'Description', type: 'text', validation: (Rule) => Rule.min(50)}),
+    defineField({name: 'description', title: 'Description', type: 'text', validation: (Rule) => Rule.min(10)}),
     defineField({name: 'nickname', title: 'Nickname', type: 'string'}),
     defineField({name: 'email', title: 'Email', type: 'email'}),
     defineField({
@@ -30,4 +40,17 @@ export const reviewType = defineType({
     }),
     defineField({name: 'time', title: 'Time', type: 'datetime'}),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      rating: 'rating',
+      productName: 'product.name',
+    },
+    prepare({ title, rating, productName }) {
+      return {
+        title: `${'⭐'.repeat(rating || 0)} ${title || 'No Title'}`,
+        subtitle: `For: ${productName || 'Unknown Product'}`,
+      }
+    },
+  },
 })

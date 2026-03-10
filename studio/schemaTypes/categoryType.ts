@@ -10,10 +10,12 @@ export const categoryType = defineType({
     select: {
       title: 'name',
       parentName: 'parent.name',
+      petType: 'petType',
     },
-    prepare({ title, parentName }) {
+    prepare({ title, parentName, petType }) {
+      const petLabel = petType ? `[${petType.charAt(0).toUpperCase() + petType.slice(1)}] ` : ''
       return {
-        title: parentName ? `${parentName} > ${title}` : title,
+        title: parentName ? `${petLabel}${parentName} > ${title}` : `${petLabel}${title}`,
       }
     },
   },
@@ -32,6 +34,23 @@ export const categoryType = defineType({
       group: 'content',
       options: { source: 'name' },
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'petType',
+      title: 'Pet Type',
+      type: 'string',
+      group: 'content',
+      options: {
+        list: [
+          {title: 'Dog', value: 'dog'},
+          {title: 'Cat', value: 'cat'},
+          {title: 'Fish', value: 'fish'},
+          {title: 'Bird', value: 'bird'},
+          {title: 'Reptile', value: 'reptile'},
+          {title: 'Small Pet', value: 'small-pet'},
+        ],
+      },
+      description: 'Is this category specific to a certain pet? (e.g. Dog Food)',
     }),
     defineField({
       name: 'image',

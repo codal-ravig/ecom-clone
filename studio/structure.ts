@@ -1,4 +1,4 @@
-import {MdOutlineProductionQuantityLimits, MdOutlineCollectionsBookmark} from 'react-icons/md'
+import {MdOutlineProductionQuantityLimits, MdOutlineCollectionsBookmark, MdStore, MdOutlineMedicalServices, MdCardMembership, MdMenu, MdPets, MdRateReview, MdQuestionAnswer} from 'react-icons/md'
 import type {StructureBuilder} from 'sanity/structure'
 import {TbBrandBadoo} from 'react-icons/tb'
 import {BiCategory} from 'react-icons/bi'
@@ -8,7 +8,74 @@ export const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
     .items([
-      // Settings Section
+      // 🚀 ROOM LEVEL (Quick Access & Moderation)
+      S.listItem()
+        .title('All Pets')
+        .icon(MdPets)
+        .child(S.documentTypeList('petProfile').title('All Pet Profiles')),
+      S.listItem()
+        .title('Customer Reviews')
+        .icon(MdRateReview)
+        .child(S.documentTypeList('review').title('Manage Reviews')),
+      S.listItem()
+        .title('Customer Q&A')
+        .icon(MdQuestionAnswer)
+        .child(S.documentTypeList('productQNA').title('Manage Q&A')),
+      S.listItem()
+        .title('All Services')
+        .icon(MdOutlineMedicalServices)
+        .child(S.documentTypeList('service').title('Petco Services')),
+
+      S.divider(),
+
+      // Core Commerce
+      S.listItem()
+        .title('Products')
+        .icon(MdOutlineProductionQuantityLimits)
+        .child(S.documentTypeList('product').title('All Products')),
+      S.listItem()
+        .title('Brands')
+        .icon(TbBrandBadoo)
+        .child(S.documentTypeList('brand').title('All Brands')),
+      S.listItem()
+        .title('Categories')
+        .icon(BiCategory)
+        .child(S.documentTypeList('category').title('Main Categories')),
+      S.listItem()
+        .title('Pet Breeds')
+        .icon(MdPets)
+        .child(S.documentTypeList('breed').title('Pet Breeds')),
+
+      S.divider(),
+
+      // Pages & Articles
+      S.listItem()
+        .title('Pages')
+        .icon(FaDesktop)
+        .child(S.documentTypeList('page').title('All Pages')),
+      S.listItem()
+        .title('Articles')
+        .icon(FaNewspaper)
+        .child(S.documentTypeList('article').title('All Articles')),
+      S.listItem()
+        .title('Article Categories')
+        .icon(FaTags)
+        .child(S.documentTypeList('articleCategory').title('Article Categories')),
+
+      S.divider(),
+
+      // Experience & Settings
+      S.listItem()
+        .title('Physical Locations')
+        .icon(MdStore)
+        .child(S.documentTypeList('store').title('Store Locations')),
+      S.listItem()
+        .title('Membership (Vital Care)')
+        .icon(MdCardMembership)
+        .child(S.documentTypeList('membership').title('Membership Tiers')),
+
+      S.divider(),
+
       S.listItem()
         .title('Settings')
         .icon(FaCogs)
@@ -22,40 +89,10 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title('Footer')
                 .child(S.document().schemaType('footer').documentId('footer')),
-            ]),
-        ),
-
-      S.divider(),
-
-      // Pages Section
-      S.listItem()
-        .title('Pages')
-        .icon(FaDesktop)
-        .child(S.documentTypeList('page').title('All Pages')),
-
-      S.divider(),
-
-      S.listItem()
-        .title('Products')
-        .icon(MdOutlineProductionQuantityLimits)
-        .child(S.documentTypeList('product').title('All Products')),
-
-      S.divider(),
-      S.listItem()
-        .title('Article Management')
-        .icon(FaNewspaper)
-        .child(
-          S.list()
-            .title('Article Management')
-            .items([
               S.listItem()
-                .title('Articles')
-                .icon(FaFileAlt)
-                .child(S.documentTypeList('article').title('All Articles')),
-              S.listItem()
-                .title('Article Categories')
-                .icon(FaTags)
-                .child(S.documentTypeList('articleCategory').title('All Categories')),
+                .title('Main Navigation')
+                .icon(MdMenu)
+                .child(S.document().schemaType('navigation').documentId('navigation')),
               S.listItem()
                 .title('Users')
                 .icon(FaUser)
@@ -64,38 +101,18 @@ export const structure = (S: StructureBuilder) =>
         ),
 
       S.divider(),
-      S.listItem()
-        .title('Taxonomy')
-        .icon(BiCategory)
-        .child(
-          S.list()
-            .title('Taxonomy')
-            .items([
-              S.listItem()
-                .title('Categories')
-                .child(S.documentTypeList('category').title('Main Categories')),
-                S.listItem()
-        .title('Brands')
-        .icon(TbBrandBadoo)
-        .child(S.documentTypeList('brand').title('All Brands')),
 
-            ]),
-        ),
-
-      S.divider(),
       S.listItem()
         .title('Collections')
         .icon(MdOutlineCollectionsBookmark)
         .child(S.documentTypeList('collection').title('All Collections')),
 
-      // Filter out types that are manually listed above to avoid duplicates at the root
+      // Filter
       ...S.documentTypeListItems().filter(
         (listItem) =>
           ![
             'product',
             'category',
-            'subCategory',
-            'childCategory',
             'brand',
             'collection',
             'article',
@@ -104,6 +121,14 @@ export const structure = (S: StructureBuilder) =>
             'page',
             'header',
             'footer',
+            'navigation',
+            'store',
+            'service',
+            'membership',
+            'breed',
+            'petProfile',
+            'review',
+            'productQNA',
           ].includes(listItem.getId() || ''),
       ),
     ])
