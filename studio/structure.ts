@@ -2,25 +2,53 @@ import {MdOutlineProductionQuantityLimits, MdOutlineCollectionsBookmark, MdStore
 import type {StructureBuilder} from 'sanity/structure'
 import {TbBrandBadoo} from 'react-icons/tb'
 import {BiCategory} from 'react-icons/bi'
-import {FaFileAlt, FaTags, FaUser, FaNewspaper, FaDesktop, FaCogs} from 'react-icons/fa'
+import { FaTags, FaUser, FaNewspaper, FaDesktop, FaCogs} from 'react-icons/fa'
 
 export const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
     .items([
       // 🚀 ROOM LEVEL (Quick Access & Moderation)
+      
+      // Grouping Pets and Breeds together as requested
       S.listItem()
-        .title('All Pets')
+        .title('Pet Management')
         .icon(MdPets)
-        .child(S.documentTypeList('petProfile').title('All Pet Profiles')),
+        .child(
+          S.list()
+            .title('Pet Management')
+            .items([
+              S.listItem()
+                .title('All Pet Profiles')
+                .icon(MdPets)
+                .child(S.documentTypeList('petProfile').title('All Pet Profiles')),
+              S.listItem()
+                .title('Pet Breeds')
+                .icon(FaTags)
+                .child(S.documentTypeList('breed').title('Master Breed List')),
+            ])
+        ),
+
+      S.divider(),
+
       S.listItem()
-        .title('Customer Reviews')
+        .title('Customer Moderation')
         .icon(MdRateReview)
-        .child(S.documentTypeList('review').title('Manage Reviews')),
-      S.listItem()
-        .title('Customer Q&A')
-        .icon(MdQuestionAnswer)
-        .child(S.documentTypeList('productQNA').title('Manage Q&A')),
+        .child(
+          S.list()
+            .title('Moderation')
+            .items([
+              S.listItem()
+                .title('Customer Reviews')
+                .icon(MdRateReview)
+                .child(S.documentTypeList('review').title('Manage Reviews')),
+              S.listItem()
+                .title('Customer Q&A')
+                .icon(MdQuestionAnswer)
+                .child(S.documentTypeList('productQNA').title('Manage Q&A')),
+            ])
+        ),
+
       S.listItem()
         .title('All Services')
         .icon(MdOutlineMedicalServices)
@@ -41,10 +69,6 @@ export const structure = (S: StructureBuilder) =>
         .title('Categories')
         .icon(BiCategory)
         .child(S.documentTypeList('category').title('Main Categories')),
-      S.listItem()
-        .title('Pet Breeds')
-        .icon(MdPets)
-        .child(S.documentTypeList('breed').title('Pet Breeds')),
 
       S.divider(),
 
