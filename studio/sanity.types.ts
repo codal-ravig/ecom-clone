@@ -28,6 +28,129 @@ export type Icon = {
   _type: 'image'
 }
 
+export type Membership = {
+  _id: string
+  _type: 'membership'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  slug?: Slug
+  price?: number
+  benefits?: Array<{
+    title?: string
+    detail?: string
+    icon?: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    _key: string
+  }>
+  ctaText?: string
+  badgeColor?: string
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x?: number
+  y?: number
+  height?: number
+  width?: number
+}
+
+export type Slug = {
+  _type: 'slug'
+  current?: string
+  source?: string
+}
+
+export type ServiceReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'service'
+}
+
+export type Store = {
+  _id: string
+  _type: 'store'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  slug?: Slug
+  address?: string
+  phone?: string
+  location?: Geopoint
+  hours?: Array<{
+    day?: string
+    time?: string
+    _key: string
+  }>
+  servicesAvailable?: Array<
+    {
+      _key: string
+    } & ServiceReference
+  >
+  isPharmacy?: boolean
+}
+
+export type Geopoint = {
+  _type: 'geopoint'
+  lat?: number
+  lng?: number
+  alt?: number
+}
+
+export type Service = {
+  _id: string
+  _type: 'service'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  slug?: Slug
+  icon?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  shortDescription?: string
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  benefits?: Array<string>
+  serviceUrl?: string
+}
+
 export type Promotion = {
   _id: string
   _type: 'promotion'
@@ -65,6 +188,37 @@ export type Seo = {
   canonicalUrl?: string
   noIndex?: boolean
   structuredData?: string
+}
+
+export type Navigation = {
+  _id: string
+  _type: 'navigation'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  items?: Array<{
+    label?: string
+    link?: string
+    children?: Array<{
+      label?: string
+      link?: string
+      _key: string
+    }>
+    featured?: {
+      title?: string
+      image?: {
+        asset?: SanityImageAssetReference
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+      }
+      link?: string
+    }
+    _type: 'navItem'
+    _key: string
+  }>
 }
 
 export type Footer = {
@@ -111,20 +265,32 @@ export type Header = {
   }>
 }
 
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
+export type ServiceGridSection = {
+  _type: 'serviceGridSection'
+  heading?: string
+  services?: Array<
+    {
+      _key: string
+    } & ServiceReference
+  >
 }
 
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x?: number
-  y?: number
-  height?: number
-  width?: number
+export type MembershipReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'membership'
+}
+
+export type MembershipSection = {
+  _type: 'membershipSection'
+  heading?: string
+  subheading?: string
+  tiers?: Array<
+    {
+      _key: string
+    } & MembershipReference
+  >
 }
 
 export type CategoryReference = {
@@ -331,13 +497,13 @@ export type Page = {
     | ({
         _key: string
       } & ProductListSection)
+    | ({
+        _key: string
+      } & MembershipSection)
+    | ({
+        _key: string
+      } & ServiceGridSection)
   >
-}
-
-export type Slug = {
-  _type: 'slug'
-  current?: string
-  source?: string
 }
 
 export type ArticleCategoryReference = {
@@ -425,6 +591,60 @@ export type ArticleCategory = {
   parent?: ArticleCategoryReference
 }
 
+export type BreedReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'breed'
+}
+
+export type PetProfile = {
+  _id: string
+  _type: 'petProfile'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  petType?: string
+  breed?: BreedReference
+  birthday?: string
+  weight?: number
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  healthIssues?: Array<string>
+}
+
+export type Breed = {
+  _id: string
+  _type: 'breed'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  slug?: Slug
+  petType?: string
+  description?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+}
+
+export type PetProfileReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'petProfile'
+}
+
 export type User = {
   _id: string
   _type: 'user'
@@ -471,6 +691,11 @@ export type User = {
         _key: string
       }
   >
+  pets?: Array<
+    {
+      _key: string
+    } & PetProfileReference
+  >
 }
 
 export type CategoryPromotion = {
@@ -505,15 +730,16 @@ export type ProductSpecification = {
   daysToShip?: number
   lifestage?: string
   primaryFlavor?: string
-  weight?: string
-  heightIn?: number
-  widthIn?: number
-  depthIn?: number
 }
 
 export type Review = {
+  _id: string
   _type: 'review'
-  review?: number
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  product?: ProductReference
+  rating?: 1 | 2 | 3 | 4 | 5
   title?: string
   description?: string
   nickname?: string
@@ -541,11 +767,14 @@ export type ProductAnswer = {
 }
 
 export type ProductQNA = {
+  _id: string
   _type: 'productQNA'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  product?: ProductReference
   nickname?: string
   question?: string
-  email?: string
-  location?: string
   answers?: Array<
     {
       _key: string
@@ -561,6 +790,11 @@ export type ProductVariant = {
   compareAtPrice?: number
   stock?: number
   sku?: string
+  barcode?: string
+  weight?: string
+  heightIn?: number
+  widthIn?: number
+  depthIn?: number
   images?: Array<{
     asset?: SanityImageAssetReference
     media?: unknown
@@ -599,6 +833,20 @@ export type Collection = {
   >
 }
 
+export type ReviewReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'review'
+}
+
+export type ProductQNAReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'productQNA'
+}
+
 export type Product = {
   _id: string
   _type: 'product'
@@ -610,19 +858,19 @@ export type Product = {
   category?: CategoryReference
   subCategory?: CategoryReference
   childCategory?: CategoryReference
-  petType?: 'dog' | 'cat' | 'fish' | 'bird' | 'reptile' | 'small-pet'
+  petType?: string
   lifeStage?: 'junior' | 'adult' | 'senior' | 'all'
   healthConsiderations?: Array<string>
   badges?: Array<string>
   review?: Array<
     {
       _key: string
-    } & Review
+    } & ReviewReference
   >
   productQNA?: Array<
     {
       _key: string
-    } & ProductQNA
+    } & ProductQNAReference
   >
   price?: number
   discountPercentage?: number
@@ -631,7 +879,7 @@ export type Product = {
   brand?: BrandReference
   sku?: string
   barcode?: string
-  availabilityStatus?: string
+  availabilityStatus?: 'in-stock' | 'out-of-stock' | 'backorder' | 'preorder'
   returnPolicy?: string
   shippingInformation?: string
   minimumOrderQuantity?: number
@@ -678,6 +926,8 @@ export type Product = {
       _key: string
     } & ProductFeature
   >
+  requiresPrescription?: boolean
+  dosageForm?: 'tablet' | 'chewable' | 'topical' | 'injectable' | 'oral-suspension'
   warranty?: string
   directions?: string
   warnings?: string
@@ -739,6 +989,7 @@ export type Brand = {
     crop?: SanityImageCrop
     _type: 'image'
   }
+  petTypes?: Array<string>
   description?: string
   seo?: Seo
 }
@@ -751,6 +1002,7 @@ export type Category = {
   _rev: string
   name?: string
   slug?: Slug
+  petType?: string
   image?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -885,23 +1137,26 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData
 }
 
-export type Geopoint = {
-  _type: 'geopoint'
-  lat?: number
-  lng?: number
-  alt?: number
-}
-
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Icon
+  | Membership
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Slug
+  | ServiceReference
+  | Store
+  | Geopoint
+  | Service
   | Promotion
   | Color
   | Seo
+  | Navigation
   | Footer
   | Header
-  | SanityImageCrop
-  | SanityImageHotspot
+  | ServiceGridSection
+  | MembershipReference
+  | MembershipSection
   | CategoryReference
   | ProductReference
   | ProductListSection
@@ -915,11 +1170,14 @@ export type AllSanitySchemaTypes =
   | TextSection
   | HeroSection
   | Page
-  | Slug
   | ArticleCategoryReference
   | UserReference
   | Article
   | ArticleCategory
+  | BreedReference
+  | PetProfile
+  | Breed
+  | PetProfileReference
   | User
   | CategoryPromotion
   | ProductFeature
@@ -931,6 +1189,8 @@ export type AllSanitySchemaTypes =
   | ProductVariant
   | ProductOption
   | Collection
+  | ReviewReference
+  | ProductQNAReference
   | Product
   | Brand
   | Category
@@ -944,7 +1204,6 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
-  | Geopoint
 
 export declare const internalGroqTypeReferenceTo: unique symbol
 

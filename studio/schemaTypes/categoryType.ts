@@ -1,5 +1,6 @@
-import { defineField, defineType } from "sanity";
-import { MdCategory } from "react-icons/md";
+import {defineField, defineType} from 'sanity'
+import {MdCategory} from 'react-icons/md'
+import {PetTypeInput} from './Users/PetTypeInput'
 
 export const categoryType = defineType({
   name: 'category',
@@ -12,7 +13,7 @@ export const categoryType = defineType({
       parentName: 'parent.name',
       petType: 'petType',
     },
-    prepare({ title, parentName, petType }) {
+    prepare({title, parentName, petType}) {
       const petLabel = petType ? `[${petType.charAt(0).toUpperCase() + petType.slice(1)}] ` : ''
       return {
         title: parentName ? `${petLabel}${parentName} > ${title}` : `${petLabel}${title}`,
@@ -32,7 +33,7 @@ export const categoryType = defineType({
       title: 'Slug',
       type: 'slug',
       group: 'content',
-      options: { source: 'name' },
+      options: {source: 'name'},
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -40,15 +41,8 @@ export const categoryType = defineType({
       title: 'Pet Type',
       type: 'string',
       group: 'content',
-      options: {
-        list: [
-          {title: 'Dog', value: 'dog'},
-          {title: 'Cat', value: 'cat'},
-          {title: 'Fish', value: 'fish'},
-          {title: 'Bird', value: 'bird'},
-          {title: 'Reptile', value: 'reptile'},
-          {title: 'Small Pet', value: 'small-pet'},
-        ],
+      components: {
+        input: PetTypeInput,
       },
       description: 'Is this category specific to a certain pet? (e.g. Dog Food)',
     }),
@@ -57,14 +51,14 @@ export const categoryType = defineType({
       title: 'Image',
       type: 'image',
       group: 'content',
-      options: { hotspot: true },
+      options: {hotspot: true},
     }),
 
     defineField({
       name: 'parent',
       title: 'Parent Category',
       type: 'reference',
-      to: [{ type: 'category' }],
+      to: [{type: 'category'}],
       group: 'content',
       description: 'Leave empty if top level category',
     }),
@@ -80,7 +74,7 @@ export const categoryType = defineType({
       name: 'featuredProducts',
       title: 'Featured Products',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'product' }] }],
+      of: [{type: 'reference', to: [{type: 'product'}]}],
       description: 'Manually select products to feature in this category.',
       group: 'promotions',
     }),
@@ -110,7 +104,7 @@ export const categoryType = defineType({
     defineField({
       name: 'mostViewed',
       title: 'Most Viewed Section',
-       description: 'The category to pull most viewed products from.',
+      description: 'The category to pull most viewed products from.',
       type: 'categoryPromotion',
       group: 'promotions',
       initialValue: {
@@ -130,8 +124,8 @@ export const categoryType = defineType({
     }),
   ],
   groups: [
-    { name: 'content', title: 'Content', default: true },
-    { name: 'promotions', title: 'Promotional Sections' },
-    { name: 'seo', title: 'SEO' },
+    {name: 'content', title: 'Content', default: true},
+    {name: 'promotions', title: 'Promotional Sections'},
+    {name: 'seo', title: 'SEO'},
   ],
 })

@@ -1,5 +1,6 @@
-import { defineField, defineType } from 'sanity'
-import { MdPets } from "react-icons/md";
+import {defineField, defineType} from 'sanity'
+import {MdPets} from 'react-icons/md'
+import {PetTypeInput} from '../Users/PetTypeInput'
 
 export const breedType = defineType({
   name: 'breed',
@@ -17,22 +18,15 @@ export const breedType = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'name' },
+      options: {source: 'name'},
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'petType',
       title: 'Pet Type',
       type: 'string',
-      options: {
-        list: [
-          {title: 'Dog', value: 'dog'},
-          {title: 'Cat', value: 'cat'},
-          {title: 'Fish', value: 'fish'},
-          {title: 'Bird', value: 'bird'},
-          {title: 'Reptile', value: 'reptile'},
-          {title: 'Small Pet', value: 'small-pet'},
-        ],
+      components: {
+        input: PetTypeInput,
       },
       validation: (Rule) => Rule.required(),
     }),
@@ -45,7 +39,7 @@ export const breedType = defineType({
       name: 'image',
       title: 'Breed Image',
       type: 'image',
-      options: { hotspot: true },
+      options: {hotspot: true},
     }),
   ],
   preview: {
@@ -54,7 +48,7 @@ export const breedType = defineType({
       petType: 'petType',
       media: 'image',
     },
-    prepare({ title, petType, media }) {
+    prepare({title, petType, media}) {
       return {
         title,
         subtitle: petType ? petType.charAt(0).toUpperCase() + petType.slice(1) : '',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { Autocomplete, Stack, Text, Card, Spinner, Flex, Avatar, Box } from '@sanity/ui'
+import { MenuButton, Menu, MenuItem, Stack, Text, Spinner, Flex, Avatar, Box, Button } from '@sanity/ui'
 import { set, unset, type StringInputProps } from 'sanity'
 
 interface PetTypeOption {
@@ -55,22 +55,8 @@ export function PetTypeInput(props: StringInputProps) {
     [onChange]
   )
 
-  const autocompleteOptions = useMemo(() => 
-    options.map(opt => ({
-      value: opt.id,
-      payload: opt
-    })), [options])
-
-  const renderOption = useCallback((option: { value: string; payload: PetTypeOption }) => (
-    <Card as="button" padding={2}>
-      <Flex align="center">
-        <Avatar src={option.payload.image} size={1} />
-        <Box flex={1} marginLeft={3}>
-          <Text size={1}>{option.payload.name}</Text>
-        </Box>
-      </Flex>
-    </Card>
-  ), [])
+  const selectedOption = useMemo(() => 
+    options.find(opt => opt.id === value), [options, value])
 
   if (loading) {
     return (
@@ -83,17 +69,37 @@ export function PetTypeInput(props: StringInputProps) {
 
   return (
     <Stack space={3}>
-      <Autocomplete
-        id="pet-type-autocomplete"
-        options={autocompleteOptions}
-        value={value || ''}
-        onSelect={handleSelect}
-        readOnly={readOnly}
-        placeholder="Type to search pet types (Dog, Cat...)"
-        renderOption={renderOption}
-        filterOption={(query, option) => 
-          option.payload.name.toLowerCase().includes(query.toLowerCase())
+      <MenuButton
+        id="pet-type-menu-button"
+        button={
+          <Button
+            mode="ghost"
+            text={selectedOption ? selectedOption.name : "Select pet type..."}
+            icon={selectedOption ? <Avatar src={selectedOption.image} size={1} /> : undefined}
+            disabled={readOnly}
+            style={{ width: '100%', textAlign: 'left' }}
+          />
         }
+        menu={
+          <Menu>
+            {options.map((option) => (
+              <MenuItem
+                key={option.id}
+                text={option.name}
+                icon={<Avatar src={option.image} size={1} />}
+                onClick={() => handleSelect(option.id)}
+              />
+            ))}
+            {value && (
+              <MenuItem
+                text="Clear selection"
+                tone="critical"
+                onClick={() => handleSelect('')}
+              />
+            )}
+          </Menu>
+        }
+        popover={{ portal: true, matchReferenceWidth: true }}
       />
       {error && <Text size={1} muted>{error}</Text>}
     </Stack>

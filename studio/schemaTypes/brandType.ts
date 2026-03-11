@@ -1,5 +1,6 @@
-import { defineField, defineType } from 'sanity'
-import { MdOutlineStorefront } from "react-icons/md";
+import {defineField, defineType} from 'sanity'
+import {MdOutlineStorefront} from 'react-icons/md'
+import {PetTypeInput} from './Users/PetTypeInput'
 
 export const brandType = defineType({
   name: 'brand',
@@ -7,8 +8,8 @@ export const brandType = defineType({
   type: 'document',
   icon: MdOutlineStorefront,
   groups: [
-    { name: 'content', title: 'Content', default: true },
-    { name: 'seo', title: 'SEO' },
+    {name: 'content', title: 'Content', default: true},
+    {name: 'seo', title: 'SEO'},
   ],
   fields: [
     defineField({
@@ -23,7 +24,7 @@ export const brandType = defineType({
       title: 'Slug',
       type: 'slug',
       group: 'content',
-      options: { source: 'name' },
+      options: {source: 'name'},
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -31,14 +32,14 @@ export const brandType = defineType({
       title: 'Logo',
       type: 'image',
       group: 'content',
-      options: { hotspot: true },
+      options: {hotspot: true},
     }),
     defineField({
       name: 'bannerImage',
       title: 'Banner Image',
       type: 'image',
       group: 'content',
-      options: { hotspot: true },
+      options: {hotspot: true},
       description: 'Used for the brand landing page header.',
     }),
     defineField({
@@ -46,18 +47,14 @@ export const brandType = defineType({
       title: 'Pet Types',
       type: 'array',
       group: 'content',
-      of: [{type: 'string'}],
-      options: {
-        list: [
-          {title: 'Dog', value: 'dog'},
-          {title: 'Cat', value: 'cat'},
-          {title: 'Fish', value: 'fish'},
-          {title: 'Bird', value: 'bird'},
-          {title: 'Reptile', value: 'reptile'},
-          {title: 'Small Pet', value: 'small-pet'},
-        ],
-        layout: 'tags',
-      },
+      of: [
+        {
+          type: 'string',
+          components: {
+            input: PetTypeInput,
+          },
+        },
+      ],
       description: 'The pets this brand provides products for.',
     }),
     defineField({

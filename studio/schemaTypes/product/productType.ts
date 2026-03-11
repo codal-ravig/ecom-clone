@@ -1,5 +1,6 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {MdOutlineProductionQuantityLimits} from 'react-icons/md'
+import {PetTypeInput} from '../Users/PetTypeInput'
 export const productType = defineType({
   name: 'product',
   title: 'Product',
@@ -100,15 +101,8 @@ export const productType = defineType({
       title: 'Pet Type',
       type: 'string' as const,
       group: 'categorization',
-      options: {
-        list: [
-          {title: 'Dog', value: 'dog'},
-          {title: 'Cat', value: 'cat'},
-          {title: 'Fish', value: 'fish'},
-          {title: 'Bird', value: 'bird'},
-          {title: 'Reptile', value: 'reptile'},
-          {title: 'Small Pet', value: 'small-pet'},
-        ],
+      components: {
+        input: PetTypeInput,
       },
     }),
     defineField({
