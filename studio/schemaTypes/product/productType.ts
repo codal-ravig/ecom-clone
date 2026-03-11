@@ -226,6 +226,14 @@ export const productType = defineType({
       title: 'Availability Status',
       type: 'string',
       group: 'delivery',
+      options: {
+        list: [
+          {title: 'In Stock', value: 'in-stock'},
+          {title: 'Out of Stock', value: 'out-of-stock'},
+          {title: 'Backorder', value: 'backorder'},
+          {title: 'Preorder', value: 'preorder'},
+        ],
+      },
     }),
     defineField({
       name: 'returnPolicy',

@@ -34,29 +34,5 @@ export const productSpecificationType = defineType({
       type: 'string',
       description: 'e.g. Bacon, Chicken, Beef',
     }),
-    defineField({
-      name: 'weight',
-      title: 'Weight',
-      type: 'string',
-      description: 'Product weight label, e.g. "16 OZ", "5 LB"',
-    }),
-    defineField({
-      name: 'heightIn',
-      title: 'Height (inches)',
-      type: 'number',
-      description: 'Item height in inches, e.g. 10.75',
-    }),
-    defineField({
-      name: 'widthIn',
-      title: 'Width (inches)',
-      type: 'number',
-      description: 'Item width in inches, e.g. 8',
-    }),
-    defineField({
-      name: 'depthIn',
-      title: 'Depth (inches)',
-      type: 'number',
-      description: 'Item depth in inches, e.g. 2',
-    }),
   ],
 })
