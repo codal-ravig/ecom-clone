@@ -11,6 +11,9 @@ At the center of the ecosystem is the **Product**. It connects to categorization
 - **Product → Category**: Products are linked to a `Main Category`, `Sub Category`, and `Child Category` for deep filtering.
 - **Product → Brand**: Every product belongs to a Brand document.
 - **Product → Articles**: Products can reference educational articles (e.g., a specific dog food referencing an article on "Puppy Nutrition").
+- **Product → Variants**: A Product can define multiple `Options` (Size, Color), which combine into `Variants` representing actual purchasable SKUs with dedicated pricing and inventory.
+- **Product → Delivery**: Delivery methods allow dynamic rendering of promotional badges (e.g., "Free Same-Day Delivery") driven by product configuration.
+- **Category → Promotions**: Categories manage their own merchandising through promotional sections like Trending, Best Sellers, and Customers Also Bought using the `categoryPromotion` object.
 - **Product → Reviews/Q&A**: Nested arrays of objects for customer interaction.
 
 ---
@@ -71,6 +74,9 @@ graph TD
     Product -->|Belongs To| Category
     Product -->|From| Brand
     Product -->|Related To| Article
+    Product -->|Has Options| ProductOption
+    Product -->|Has SKUs| ProductVariant
+    Category -->|Merchandises| CategoryPromotion
     Store -->|Offers| Service
     Page -->|Features| MembershipTier
     Navigation -->|Links To| Category

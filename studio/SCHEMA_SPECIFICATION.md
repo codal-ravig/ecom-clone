@@ -14,15 +14,26 @@ The central document for all items sold in-store and online.
 | `slug` | `slug` | URL path based on name. | - |
 | `category` | `reference` | Primary top-level category. | → `category` |
 | `subCategory` | `reference` | Second-level category. | → `category` |
+| `childCategory` | `reference` | Third-level category. | → `category` |
 | `brand` | `reference` | Brand of the product. | → `brand` |
 | `petType` | `string` | Dog, Cat, Fish, etc. | - |
+| `lifeStage` | `string` | Puppy, Adult, Senior, etc. | - |
+| `healthConsiderations`| `array[string]` | Tags for health traits. | - |
+| `badges` | `array[string]` | Promo badges (Sale, New). | - |
 | `price` | `number` | Base price. | - |
+| `discountPercentage`| `number` | Base discount. | - |
 | `stock` | `number` | Total inventory. | - |
 | `images` | `array[image]` | Product gallery. | - |
-| `variants` | `array[variant]` | Options (Size/Color). | - |
+| `options` | `array[object]` | Defined dimensions (Color/Size).| → `productOption` |
+| `variants` | `array[object]` | SKUs combining options. | → `productVariant` |
+| `specifications` | `object` | Dimensions and specs. | → `productSpecification`|
+| `additionalFeatures`| `array[object]` | Extra feature bullets. | → `productFeature` |
 | `review` | `array[reference]` | Customer feedback. | → `review` |
 | `productQNA` | `array[reference]` | Questions & Answers. | → `productQNA` |
 | `requiresPrescription` | `boolean` | Pharmacy flag. | - |
+| `dosageForm` | `string` | Tablet, chewable, etc. | - |
+| `deliveryMethods` | `array[object]` | Fulfillment options & badges.| - |
+| `repeatDeliveryDiscount`|`number`| Ongoing % discount. | - |
 
 ### 1.2 Category (`category`)
 Hierarchical classification system.
@@ -33,6 +44,10 @@ Hierarchical classification system.
 | `petType` | `string` | Optional pet-specific filter. | - |
 | `parent` | `reference` | Link to a parent category. | → `category` |
 | `featuredProducts` | `array[reference]`| Hand-picked items. | → `product` |
+| `trendingProducts` | `object` | Trending promo section. | → `categoryPromotion`|
+| `bestSellers` | `object` | Best sellers section. | → `categoryPromotion`|
+| `mostViewed` | `object` | Most viewed section. | → `categoryPromotion`|
+| `alsoBought` | `object` | Customers also bought section.| → `categoryPromotion`|
 
 ### 1.3 Brand (`brand`)
 Manufacturer information.
@@ -41,6 +56,31 @@ Manufacturer information.
 | `name` | `string` | Brand name. | - |
 | `image` | `image` | Brand logo. | - |
 | `petTypes` | `array[string]` | Pets supported by this brand. | - |
+
+### 1.4 Product Auxiliary Structures
+Supporting schemas that power complex product details.
+
+**Product Option (`productOption`)**
+Values that can be combined to form a SKU representation (e.g. Name: "Size", Values: ["S", "M", "L"]).
+
+**Product Variant (`productVariant`)**
+The actual purchasable SKU, built from a combination of Options.
+| Field Name | Type | Description |
+| :--- | :--- | :--- |
+| `combination` | `string` | Auto-generated combo name. |
+| `price` | `number` | Specific price for variant. |
+| `compareAtPrice`| `number` | Sale / original price. |
+| `stock` | `number` | Specific inventory for variant. |
+| `images` | `array[image]` | Variant specific media. |
+
+**Product Specification (`productSpecification`)**
+Groups all technical specifications of a product.
+| Field Name | Type | Description |
+| :--- | :--- | :--- |
+| `sku` / `brand` | `string`/`ref` | Technical identifiers. |
+| `daysToShip` | `number` | Expected time to fulfilling. |
+| `lifestage` | `string` | E.g., Puppy, Adult, Senior. |
+| `weight`/`dims` | `string`/`num`| Physics-related measurements. |
 
 ---
 

@@ -19,11 +19,11 @@
     "@sanity/client": "^7.15.0",
     "@sanity/color-input": "^6.0.4",
     "@sanity/ui": "^3.1.13",
-    "@sanity/vision": "^5.13.0",
+    "@sanity/vision": "^5.14.1",
     "react": "^19.1",
     "react-dom": "^19.1",
     "react-icons": "^5.5.0",
-    "sanity": "^5.13.0",
+    "sanity": "^5.14.1",
     "sanity-plugin-references": "^1.0.1",
     "styled-components": "^6.1.18"
   },
