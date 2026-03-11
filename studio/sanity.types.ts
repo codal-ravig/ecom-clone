@@ -698,6 +698,16 @@ export type User = {
   >
 }
 
+export type ProductBadge = {
+  _id: string
+  _type: 'productBadge'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  color?: Color
+}
+
 export type CategoryPromotion = {
   _type: 'categoryPromotion'
   active?: boolean
@@ -833,6 +843,13 @@ export type Collection = {
   >
 }
 
+export type ProductBadgeReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'productBadge'
+}
+
 export type ReviewReference = {
   _ref: string
   _type: 'reference'
@@ -861,7 +878,11 @@ export type Product = {
   petType?: string
   lifeStage?: 'junior' | 'adult' | 'senior' | 'all'
   healthConsiderations?: Array<string>
-  badges?: Array<string>
+  badges?: Array<
+    {
+      _key: string
+    } & ProductBadgeReference
+  >
   review?: Array<
     {
       _key: string
@@ -1179,6 +1200,7 @@ export type AllSanitySchemaTypes =
   | Breed
   | PetProfileReference
   | User
+  | ProductBadge
   | CategoryPromotion
   | ProductFeature
   | BrandReference
@@ -1189,6 +1211,7 @@ export type AllSanitySchemaTypes =
   | ProductVariant
   | ProductOption
   | Collection
+  | ProductBadgeReference
   | ReviewReference
   | ProductQNAReference
   | Product

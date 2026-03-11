@@ -134,16 +134,13 @@ export const productType = defineType({
       title: 'Product Badges',
       type: 'array' as const,
       group: 'general',
-      of: [{type: 'string'}],
-      options: {
-        list: [
-          {title: 'New', value: 'new'},
-          {title: 'Sale', value: 'sale'},
-          {title: 'Natural', value: 'natural'},
-          {title: 'Grain-Free', value: 'grain-free'},
-          {title: 'Top Rated', value: 'top-rated'},
-        ],
-      },
+      of: [
+        defineArrayMember({
+          type: 'reference' as const,
+          to: [{type: 'productBadge'}],
+        }),
+      ],
+      description: 'Select dynamically created badges to attach to this product.',
     }),
     defineField({
       name: 'review',
@@ -154,6 +151,16 @@ export const productType = defineType({
         defineArrayMember({
           type: 'reference' as const,
           to: [{type: 'review'}],
+          options: {
+            filter: ({document}: any) => {
+              if (!document._id) return {filter: 'false'}
+              const productId = document._id.replace('drafts.', '')
+              return {
+                filter: 'product._ref == $productId',
+                params: {productId},
+              }
+            },
+          },
         }),
       ],
     }),
@@ -166,6 +173,16 @@ export const productType = defineType({
         defineArrayMember({
           type: 'reference' as const,
           to: [{type: 'productQNA'}],
+          options: {
+            filter: ({document}: any) => {
+              if (!document._id) return {filter: 'false'}
+              const productId = document._id.replace('drafts.', '')
+              return {
+                filter: 'product._ref == $productId',
+                params: {productId},
+              }
+            },
+          },
         }),
       ],
     }),

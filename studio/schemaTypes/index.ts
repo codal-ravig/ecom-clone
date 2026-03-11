@@ -12,6 +12,7 @@ import {productFeatureType} from './product/productFeatureType'
 import {categoryPromotionType} from './product/categoryPromotionType'
 import {userType} from './Users/UserType'
 import {petProfileType} from './Users/petProfileType'
+import {productBadgeType} from './product/productBadgeType'
 import {breedType} from './product/breedType'
 import {articleCategoryType} from './article/articleCategory'
 import {articleType} from './article/articleType'
@@ -49,6 +50,7 @@ export const schemaTypes = [
   productSpecificationType,
   productFeatureType,
   categoryPromotionType,
+  productBadgeType,
   userType,
   petProfileType,
   breedType,

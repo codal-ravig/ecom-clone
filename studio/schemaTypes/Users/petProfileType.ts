@@ -1,7 +1,6 @@
-import { defineField, defineType } from 'sanity'
-import { MdPets } from "react-icons/md";
-import { PetTypeInput } from './PetTypeInput';
-
+import {defineField, defineType} from 'sanity'
+import {MdPets} from 'react-icons/md'
+import {PetTypeInput} from './PetTypeInput'
 export const petProfileType = defineType({
   name: 'petProfile',
   title: 'Pet Profile',
@@ -18,23 +17,23 @@ export const petProfileType = defineType({
       name: 'petType',
       title: 'Pet Type',
       type: 'string',
-       components: {                                                                                                    
-      input: PetTypeInput,                                                                                              
-         },  
+      components: {
+        input: PetTypeInput,
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'breed',
       title: 'Breed',
       type: 'reference',
-      to: [{ type: 'breed' }],
+      to: [{type: 'breed'}],
       options: {
-        filter: ({ document, parent }: any) => {
+        filter: ({document, parent}: any) => {
           const petType = (parent as any)?.petType
-          if (!petType) return { filter: 'false' }
+          if (!petType) return {filter: 'false'}
           return {
             filter: 'petType == $petType',
-            params: { petType },
+            params: {petType},
           }
         },
       },
@@ -53,13 +52,13 @@ export const petProfileType = defineType({
       name: 'image',
       title: 'Pet Photo',
       type: 'image',
-      options: { hotspot: true },
+      options: {hotspot: true},
     }),
     defineField({
       name: 'healthIssues',
       title: 'Health Considerations',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [{type: 'string'}],
     }),
   ],
   preview: {
@@ -68,7 +67,7 @@ export const petProfileType = defineType({
       petType: 'petType',
       media: 'image',
     },
-    prepare({ title, petType, media }) {
+    prepare({title, petType, media}) {
       return {
         title,
         subtitle: petType ? petType.charAt(0).toUpperCase() + petType.slice(1) : '',
