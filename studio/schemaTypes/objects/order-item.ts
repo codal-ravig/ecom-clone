@@ -1,11 +1,30 @@
 import {defineField, defineType} from 'sanity'
 import {OrderItemVariantInput} from './order-item-variant-input'
+import {OrderItemSnapshotter} from './OrderItemSnapshotter'
 
 export const orderItemType = defineType({
   name: 'orderItem',
   title: 'Order Item',
   type: 'object',
   fields: [
+    defineField({
+      name: 'snapshotter',
+      title: 'Snapshotter',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'isActive',
+          type: 'boolean',
+          initialValue: true,
+          hidden: true,
+        }),
+      ],
+      components: {
+        input: OrderItemSnapshotter,
+      },
+      // Hide this field but keep it in the form for automation
+      hidden: true,
+    }),
     defineField({
       name: 'product',
       title: 'Product',
@@ -60,18 +79,27 @@ export const orderItemType = defineType({
       type: 'string',
       description: 'Stores the SKU as it was when the order was placed.',
     }),
+    defineField({
+      name: 'snapshotImage',
+      title: 'Product Image (at time of purchase)',
+      type: 'image',
+    }),
   ],
   preview: {
     select: {
-      title: 'product.name',
+      productTitle: 'product.name',
+      snapshotName: 'snapshotName',
       quantity: 'quantity',
       price: 'price',
       variant: 'variant',
+      snapshotImage: 'snapshotImage',
+      productImage: 'product.images.0',
     },
-    prepare({title, quantity, price, variant}) {
+    prepare({productTitle, snapshotName, quantity, price, variant, snapshotImage, productImage}) {
       return {
-        title: title || 'Loading...',
+        title: snapshotName || productTitle || 'Loading...',
         subtitle: `${quantity} x $${price} ${variant ? `(${variant})` : ''}`,
+        media: snapshotImage || productImage,
       }
     },
   },
