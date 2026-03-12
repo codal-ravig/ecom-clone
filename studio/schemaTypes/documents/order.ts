@@ -6,18 +6,25 @@ export const orderType = defineType({
   title: 'Order',
   type: 'document',
   icon: BasketIcon,
+  groups: [
+    {name: 'logistics', title: 'Logistics'},
+    {name: 'cx', title: 'Customer Experience'},
+    {name: 'metadata', title: 'Metadata'},
+  ],
   fields: [
     defineField({
       name: 'orderNumber',
       title: 'Order Number',
       type: 'string',
+      group: 'metadata',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'customer',
       title: 'Customer',
-      type: 'reference',
+      type: 'reference' as const,
       to: [{type: 'user'}],
+      group: 'metadata',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -25,6 +32,7 @@ export const orderType = defineType({
       title: 'Order Date',
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
+      group: 'metadata',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -42,6 +50,7 @@ export const orderType = defineType({
         ],
       },
       initialValue: 'pending',
+      group: 'logistics',
     }),
     defineField({
       name: 'fulfillmentStatus',
@@ -56,16 +65,19 @@ export const orderType = defineType({
         ],
       },
       initialValue: 'unfulfilled',
+      group: 'logistics',
     }),
     defineField({
       name: 'customerEmail',
       title: 'Customer Email',
       type: 'string',
+      group: 'metadata',
     }),
     defineField({
       name: 'customerPhone',
       title: 'Customer Phone',
       type: 'string',
+      group: 'metadata',
     }),
     defineField({
       name: 'items',
@@ -83,16 +95,68 @@ export const orderType = defineType({
       name: 'shippingAddress',
       title: 'Shipping Address',
       type: 'address',
+      group: 'logistics',
     }),
     defineField({
       name: 'billingAddress',
       title: 'Billing Address',
       type: 'address',
+      group: 'logistics',
+    }),
+    defineField({
+      name: 'shippingDetails',
+      title: 'Shipping Details',
+      type: 'shippingDetails',
+      group: 'logistics',
+    }),
+    defineField({
+      name: 'deliveryInstructions',
+      title: 'Delivery Instructions',
+      type: 'text',
+      group: 'cx',
+      rows: 3,
+    }),
+    defineField({
+      name: 'isGift',
+      title: 'Is this a gift?',
+      type: 'boolean',
+      initialValue: false,
+      group: 'cx',
+    }),
+    defineField({
+      name: 'giftMessage',
+      title: 'Gift Message',
+      type: 'text',
+      group: 'cx',
+      hidden: ({parent}) => !parent?.isGift,
+      rows: 3,
+    }),
+    defineField({
+      name: 'salesChannel',
+      title: 'Sales Channel',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Web', value: 'web'},
+          {title: 'iOS App', value: 'ios'},
+          {title: 'Android App', value: 'android'},
+          {title: 'In-Store POS', value: 'pos'},
+        ],
+      },
+      group: 'metadata',
+    }),
+    defineField({
+      name: 'currency',
+      title: 'Currency',
+      type: 'string',
+      initialValue: 'USD',
+      group: 'metadata',
     }),
     defineField({
       name: 'notes',
-      title: 'Notes',
+      title: 'Internal Notes',
       type: 'text',
+      group: 'metadata',
     }),
     defineField({
       name: 'timeline',

@@ -48,6 +48,18 @@ export const orderItemType = defineType({
       },
       initialValue: 'unfulfilled',
     }),
+    defineField({
+      name: 'snapshotName',
+      title: 'Product Name (at time of purchase)',
+      type: 'string',
+      description: 'Stores the product name as it was when the order was placed.',
+    }),
+    defineField({
+      name: 'snapshotSku',
+      title: 'Product SKU (at time of purchase)',
+      type: 'string',
+      description: 'Stores the SKU as it was when the order was placed.',
+    }),
   ],
   preview: {
     select: {

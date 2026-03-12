@@ -41,6 +41,7 @@ import {orderItemType} from './objects/order-item'
 import {orderType} from './documents/order'
 import {orderSummaryType} from './objects/order-summary'
 import {timelineEventType} from './objects/timeline-event'
+import {shippingDetailsType} from './objects/shipping-details'
 
 export const schemaTypes = [
   productType,
@@ -86,4 +87,5 @@ export const schemaTypes = [
   orderType,
   orderSummaryType,
   timelineEventType,
+  shippingDetailsType,
 ]
