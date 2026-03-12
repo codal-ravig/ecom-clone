@@ -1,12 +1,12 @@
 import {defineField, defineType} from 'sanity'
-import {MdCategory} from 'react-icons/md'
+import {TagIcon} from '@sanity/icons'
 import {PetTypeInput} from './Users/PetTypeInput'
 
 export const categoryType = defineType({
   name: 'category',
   title: 'Category',
   type: 'document',
-  icon: MdCategory,
+  icon: TagIcon,
   preview: {
     select: {
       title: 'name',

@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {MdOutlineProductionQuantityLimits} from 'react-icons/md'
+import {PackageIcon} from '@sanity/icons'
 import {PetTypeInput} from '../Users/PetTypeInput'
 export const productType = defineType({
   name: 'product',
   title: 'Product',
   type: 'document',
-  icon: MdOutlineProductionQuantityLimits,
+  icon: PackageIcon,
   groups: [
     {name: 'general', title: 'General Info'},
     {name: 'categorization', title: 'Categorization'},
@@ -15,6 +15,13 @@ export const productType = defineType({
     {name: 'delivery', title: 'Delivery & Promotions'},
     {name: 'seo', title: 'SEO'},
     {name: 'relatedContent', title: 'Related Content'},
+  ],
+  fieldsets: [
+    {
+      name: 'classification',
+      title: 'Product Classification',
+      options: {collapsible: true, collapsed: false},
+    },
   ],
   preview: {
     select: {
@@ -36,9 +43,9 @@ export const productType = defineType({
     defineField({
       name: 'name',
       title: 'Title',
-      type: 'string' as const,
+      type: 'string',
       group: 'general',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
@@ -99,8 +106,9 @@ export const productType = defineType({
     defineField({
       name: 'petType',
       title: 'Pet Type',
-      type: 'string' as const,
+      type: 'string',
       group: 'categorization',
+      fieldset: 'classification',
       components: {
         input: PetTypeInput,
       },
@@ -108,8 +116,9 @@ export const productType = defineType({
     defineField({
       name: 'lifeStage',
       title: 'Life Stage',
-      type: 'string' as const,
+      type: 'string',
       group: 'categorization',
+      fieldset: 'classification',
       options: {
         list: [
           {title: 'Puppy / Kitten', value: 'junior'},
@@ -122,8 +131,9 @@ export const productType = defineType({
     defineField({
       name: 'healthConsiderations',
       title: 'Health Considerations',
-      type: 'array' as const,
+      type: 'array',
       group: 'categorization',
+      fieldset: 'classification',
       of: [{type: 'string'}],
       options: {
         layout: 'tags',
@@ -331,12 +341,20 @@ export const productType = defineType({
     }),
     // ─── Pharmacy ────────────────────────────────────────────────────────
     defineField({
-      name: 'requiresPrescription',
-      title: 'Requires Prescription',
-      type: 'boolean' as const,
+      name: 'prescriptionStatus',
+      title: 'Prescription Status',
+      type: 'string',
       group: 'attributes',
-      initialValue: false,
-      description: 'Is this a Pharmacy product requiring veterinary approval?',
+      initialValue: 'not-required',
+      options: {
+        list: [
+          {title: 'Not Required', value: 'not-required'},
+          {title: 'Required', value: 'required'},
+          {title: 'Verification Pending', value: 'pending'},
+        ],
+        layout: 'radio',
+      },
+      description: 'Prescription requirement status for Pharmacy products.',
     }),
     defineField({
       name: 'dosageForm',
@@ -352,7 +370,7 @@ export const productType = defineType({
           {title: 'Oral Suspension', value: 'oral-suspension'},
         ],
       },
-      hidden: ({document}: any) => !document.requiresPrescription,
+      hidden: ({document}) => document?.prescriptionStatus !== 'required',
     }),
     defineField({
       name: 'warranty',

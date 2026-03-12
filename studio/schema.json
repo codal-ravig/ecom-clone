@@ -1,6 +1,43 @@
 [
   {
     "type": "type",
+    "name": "dimensions",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "weight": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "heightIn": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
+        "widthIn": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
+        "depthIn": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "sanity.imageAsset.reference",
     "value": {
       "type": "object",
@@ -4842,31 +4879,11 @@
           },
           "optional": true
         },
-        "weight": {
+        "dimensions": {
           "type": "objectAttribute",
           "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "heightIn": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "number"
-          },
-          "optional": true
-        },
-        "widthIn": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "number"
-          },
-          "optional": true
-        },
-        "depthIn": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "number"
+            "type": "inline",
+            "name": "dimensions"
           },
           "optional": true
         },
@@ -5777,10 +5794,24 @@
         },
         "optional": true
       },
-      "requiresPrescription": {
+      "prescriptionStatus": {
         "type": "objectAttribute",
         "value": {
-          "type": "boolean"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "not-required"
+            },
+            {
+              "type": "string",
+              "value": "required"
+            },
+            {
+              "type": "string",
+              "value": "pending"
+            }
+          ]
         },
         "optional": true
       },

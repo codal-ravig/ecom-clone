@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {FaDesktop} from 'react-icons/fa'
+import {DocumentIcon} from '@sanity/icons'
 
 export const pageType = defineType({
   name: 'page',
   title: 'Page',
   type: 'document',
-  icon: FaDesktop,
+  icon: DocumentIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'seo', title: 'SEO'},

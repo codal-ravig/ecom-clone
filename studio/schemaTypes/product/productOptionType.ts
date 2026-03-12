@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {IoListOutline} from 'react-icons/io5'
+import {UlistIcon} from '@sanity/icons'
 
 export const productOptionType = defineType({
   name: 'productOption',
   title: 'Product Option',
   type: 'object',
-  icon: IoListOutline,
+  icon: UlistIcon,
   fields: [
     defineField({
       name: 'name',

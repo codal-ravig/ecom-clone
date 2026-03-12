@@ -13,6 +13,13 @@
  */
 
 // Source: schema.json
+export type Dimensions = {
+  weight?: string
+  heightIn?: number
+  widthIn?: number
+  depthIn?: number
+}
+
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'
@@ -801,10 +808,7 @@ export type ProductVariant = {
   stock?: number
   sku?: string
   barcode?: string
-  weight?: string
-  heightIn?: number
-  widthIn?: number
-  depthIn?: number
+  dimensions?: Dimensions
   images?: Array<{
     asset?: SanityImageAssetReference
     media?: unknown
@@ -947,7 +951,7 @@ export type Product = {
       _key: string
     } & ProductFeature
   >
-  requiresPrescription?: boolean
+  prescriptionStatus?: 'not-required' | 'required' | 'pending'
   dosageForm?: 'tablet' | 'chewable' | 'topical' | 'injectable' | 'oral-suspension'
   warranty?: string
   directions?: string
@@ -1159,6 +1163,7 @@ export type SanityImageAsset = {
 }
 
 export type AllSanitySchemaTypes =
+  | Dimensions
   | SanityImageAssetReference
   | Icon
   | Membership

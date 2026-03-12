@@ -1,12 +1,12 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {MdOutlineLabel} from 'react-icons/md'
+import {TagIcon} from '@sanity/icons'
 import {CombinationInput} from './CombinationInput'
 
 export const productVariantType = defineType({
   name: 'productVariant',
   title: 'Product Variant',
   type: 'object',
-  icon: MdOutlineLabel,
+  icon: TagIcon,
   fields: [
     defineField({
       name: 'combination',
@@ -37,6 +37,14 @@ export const productVariantType = defineType({
       type: 'number',
       description:
         'Original "was" price shown crossed out (e.g. $15.99 crossed out, sale price $10.39). Leave empty if no sale.',
+      validation: (Rule) =>
+        Rule.custom((compareAtPrice, context) => {
+          const price = (context.parent as any)?.price
+          if (compareAtPrice && price && compareAtPrice < price) {
+            return 'Compare-at price must be greater than or equal to the sale price'
+          }
+          return true
+        }),
     }),
     defineField({
       name: 'stock',
@@ -55,28 +63,35 @@ export const productVariantType = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'weight',
-      title: 'Weight',
-      type: 'string',
-      description: 'Product weight label, e.g. "16 OZ", "5 LB"',
-    }),
-    defineField({
-      name: 'heightIn',
-      title: 'Height (inches)',
-      type: 'number',
-      description: 'Item height in inches, e.g. 10.75',
-    }),
-    defineField({
-      name: 'widthIn',
-      title: 'Width (inches)',
-      type: 'number',
-      description: 'Item width in inches, e.g. 8',
-    }),
-    defineField({
-      name: 'depthIn',
-      title: 'Depth (inches)',
-      type: 'number',
-      description: 'Item depth in inches, e.g. 2',
+      name: 'dimensions',
+      title: 'Dimensions & Weight',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'weight',
+          title: 'Weight',
+          type: 'string',
+          description: 'Product weight label, e.g. "16 OZ", "5 LB"',
+        }),
+        defineField({
+          name: 'heightIn',
+          title: 'Height (inches)',
+          type: 'number',
+          description: 'Item height in inches, e.g. 10.75',
+        }),
+        defineField({
+          name: 'widthIn',
+          title: 'Width (inches)',
+          type: 'number',
+          description: 'Item width in inches, e.g. 8',
+        }),
+        defineField({
+          name: 'depthIn',
+          title: 'Depth (inches)',
+          type: 'number',
+          description: 'Item depth in inches, e.g. 2',
+        }),
+      ],
     }),
     defineField({
       name: 'images',
@@ -98,9 +113,11 @@ export const productVariantType = defineType({
       stock: 'stock',
       media: 'images.0.asset',
     },
-    prepare({combination, name, price, stock, media}) {
+    prepare({combination, name, price, stock, media}: any) {
       const comboLabel = combination
-        ? combination.replace(/-/g, ' / ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+        ? (combination as string)
+            .replace(/-/g, ' / ')
+            .replace(/\b\w/g, (c: string) => c.toUpperCase())
         : 'No combination'
       return {
         title: name ? `${name} (${comboLabel})` : comboLabel,
