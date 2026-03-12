@@ -36,6 +36,11 @@ import {promotionType} from './documents/promotion'
 import {serviceType} from './documents/service'
 import {storeType} from './documents/store'
 import {membershipType} from './documents/membership'
+import {addressType} from './objects/address'
+import {orderItemType} from './objects/order-item'
+import {orderType} from './documents/order'
+import {orderSummaryType} from './objects/order-summary'
+import {timelineEventType} from './objects/timeline-event'
 
 export const schemaTypes = [
   productType,
@@ -76,4 +81,9 @@ export const schemaTypes = [
   serviceType,
   storeType,
   membershipType,
+  addressType,
+  orderItemType,
+  orderType,
+  orderSummaryType,
+  timelineEventType,
 ]
