@@ -1,91 +1,91 @@
-# Petco Clone - Sanity Studio
+# 🐾 Petco Clone: The Architectural Blueprint
 
-This is a Sanity Studio project for the Petco clone, designed to manage products, categories, articles, pages, and site-wide configurations with a modular and hierarchical structure.
+Welcome to the **Petco Clone** Content Engine. This repository houses a sophisticated Sanity Studio v3 implementation, meticulously engineered to mirror a high-scale e-commerce experience with a focus on data integrity, hierarchical taxonomies, and a dynamic page composition system.
 
-## Project Structure
+---
 
-This project uses a monorepo structure managed by **pnpm**.
+## 🏗️ Content Architecture
 
-- `studio`: The core Sanity Studio application (package name: `petco-clone`).
-  - `schemaTypes/`: Definition of content models (schemas).
-  - `migrations/`: Sanity CLI scripts for data transformations (e.g., importing users, fixing keys).
-  - `queries/`: GROQ queries for fetching data in frontend applications.
-- `packages/`: Workspace for shared components or configurations (currently reserved for future use).
+Our schema is built on the principle of **Modular Decoupling** and **Historical Integrity**. Below is a high-level visualization of how our core entities interact:
 
-## Configuration
-
-- **Project ID:** `i9lae4hh`
-- **Dataset:** `production`
-
-## Schema Architecture
-
-The content model is designed to support deep nesting, data integrity, and a dynamic page builder for a complex e-commerce catalog.
-
-### 1. Products & Taxonomy
-- **Products (`product`):** Detailed schema including Title, Slug, Stock, Price, Images, **Reviews**, **Specifications**, **Features**, **Variants**, and **Q&A**.
-- **Taxonomy:** Hierarchical categorization with **Category**, **Sub-Category**, and **Child Category**. Categories support a **Page Builder** to create dynamic landing pages.
-- **Brands:** Centrally managed brands with logos, referenced across products.
-- **Collections:** Curated groups of products.
-
-### 2. Pages & Articles
-- **Pages (`page`):** Dynamic page builder using a variety of sections:
-  - **Hero Section:** Large visual introduction.
-  - **Grid Section:** Flexible layouts for content blocks.
-  - **FAQ Section:** Frequently asked questions.
-  - **Featured Articles:** Showcasing specific content.
-  - **Contact Hero Section:** Specialized hero for contact pages.
-  - **Info/Text Sections:** Standard content blocks.
-- **Articles (`article`):** Blog posts or informational content, categorized by **Article Categories**.
-
-### 3. Settings & Users
-- **Global Settings:** Centralized configuration for **Header** and **Footer** navigation and branding.
-- **Users (`user`):** Schema for managing user profiles.
-
-## Getting Started
-
-### Prerequisites
-- [Node.js](https://nodejs.org/) (Latest LTS recommended)
-- [pnpm](https://pnpm.io/)
-
-### Installation
-From the root directory, install dependencies for all workspaces:
-```bash
-pnpm install
+```mermaid
+erDiagram
+    PRODUCT ||--o{ PRODUCT_VARIANT : "has"
+    PRODUCT ||--o{ REVIEW : "receives"
+    PRODUCT }|--|| CATEGORY : "categorized_by"
+    PRODUCT ||--o{ PRODUCT_QNA : "contains"
+    
+    ORDER ||--|{ ORDER_ITEM : "contains"
+    ORDER_ITEM ||--|| PRODUCT : "references"
+    
+    PAGE ||--|{ SECTION : "composed_of"
+    SECTION ||--o{ PRODUCT : "displays"
+    
+    USER ||--o{ PET_PROFILE : "owns"
+    USER ||--o{ ORDER : "places"
 ```
 
-### Development
-To start the Sanity Studio locally from the root:
-```bash
-pnpm dev
-```
-Alternatively, you can navigate to the `studio` directory and run:
-```bash
-cd studio
-pnpm dev
-```
+---
 
-The studio will be available at `http://localhost:3333`.
+## 💎 Core Domains
 
-## Commands
+### 🛍️ The Product Engine
+The heart of the catalog, supporting complex retail requirements:
+- **Variants & Options:** Multi-dimensional variants (Size, Color, Flavor) with independent Pricing, SKU, and Stock management.
+- **Enriched Attributes:** Deep specifications, feature lists, and pharmacy-specific statuses (Prescription requirements, Dosage forms).
+- **Social Proof:** Integrated Review and Q&A systems.
+- **Dynamic Delivery:** Granular control over fulfillment (Pickup, Same-Day, Ship-to-Me) with promo badge logic.
 
-Run these commands from the root directory to execute across all workspaces, or within `studio/` for targeted execution.
+### 📦 Order Integrity (The "Snapshot" System)
+We solve the "Price Change Paradox" using a custom automation layer:
+- **Mutable vs. Immutable:** While Product data lives and changes, **Orders are frozen in time**.
+- **Snapshotter Logic:** Our custom `OrderItemSnapshotter` captures the exact Title, Price, SKU, and Image at the moment of selection.
+- **Historical Accuracy:** Financial records remain untouched by future catalog updates.
 
-- `pnpm build`: Build all workspaces (Studio).
-- `pnpm lint`: Run linting across the monorepo.
-- `pnpm test`: Run tests (if configured).
+### 🍱 The Page Builder (Block-Based Flex)
+A "LEGO-style" assembly system for landing pages and categories:
+- **Hero & Contact Units:** High-impact visual headers.
+- **Grid Layouts:** Flexible content distribution.
+- **Intelligence Factories:** Components like `product-list-factory` that dynamically pull inventory based on rules.
+- **SEO & Metadata:** Native integration with SEO objects per page and article.
 
-### Studio-Specific Commands
-(Run inside `studio/`)
+### 🐕 Pet-Centric Ecosystem
+- **Pet Profiles:** Detailed owner-pet relationships supporting personalized experiences (Breed, Life Stage).
+- **Services & Memberships:** Managing physical store services (Grooming, Veterinary) and loyalty tiers.
+- **Hierarchical Taxonomy:** A 3-tier deep navigation tree: `Category` → `Sub-Category` → `Child Category`.
 
-- `sanity dev`: Start the development server.
-- `sanity deploy`: Deploy the Studio to the Sanity cloud.
-- `sanity schema extract`: Extract schema to `schema.json`.
-- `sanity typegen generate`: Generate TypeScript types from schemas.
-- `pnpm typegen`: localized script to run extract & generate.
+---
 
-## Tech Stack
-- **Sanity Studio v3** (Content Platform)
-- **React 19** (UI Library)
-- **TypeScript** (Language)
-- **pnpm** (Package Management)
-- **GROQ** (Query Language)
+## 🛠️ Specialized Tooling
+
+We extend the Studio with custom React components to handle complex logic where native fields aren't enough:
+
+| Component | Purpose |
+| :--- | :--- |
+| `OrderItemSnapshotter` | Automates the "Freezing" of product data for orders. |
+| `PetTypeInput` | Intuitive selection for pet classification. |
+| `CombinationInput` | Visual tool for defining product variant permutations. |
+| `OrderItemVariantInput` | Helper for mapping orders to specific variant SKUs. |
+
+---
+
+## 🚀 Deployment & Operations
+
+### Tech Stack
+- **Engine:** Sanity Studio v3 (React 19 + TypeScript)
+- **Queries:** GROQ with strongly typed TypeGen
+- **Package Management:** `pnpm` (Monorepo)
+
+### Development Workflow
+1.  **Installation:** `pnpm install` from the root.
+2.  **Local Run:** `pnpm dev` (starts Studio at `localhost:3333`).
+3.  **Type Safety:** Run `pnpm typegen` whenever schemas change to sync TypeScript interfaces.
+4.  **Deployment:** `sanity deploy` to push the latest content model to the cloud.
+
+---
+
+> [!TIP]
+> **Pro-Tip:** All internal logic follows the "Sanity Best Practices" skill set, ensuring performance and visual editing compatibility.
+
+---
+© 2026 Petco Clone Engineering Team. All rights reserved.
